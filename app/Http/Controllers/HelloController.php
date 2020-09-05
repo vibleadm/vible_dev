@@ -10,11 +10,39 @@ use Illuminate\Support\Facades\Auth;
 
 class HelloController extends Controller
 {
+    public function index(Request $request)
+    {
+        $user = Auth::user();
+        $sort = $request->sort;
+        $items = Person::orderBy($sort, 'asc')->simplePaginate(5);
+        $param = ['items' => $items, 'sort' => $sort, 'user' => $user];
+        return view('hello.index', $param);
+    }
+
     public function nayami(Request $request)
     {
-	$items = DB::select('select * from Question);
-	return view('hello.nayami', ['items' => $items]);
+        $items = DB::table('Question')->get();
+        return view('test.nayami',['items'=>$items]);
     }
+
+    public function nayami_add(Request $request)
+    {
+        return view('test.add');
+    }
+
+    public function nayami_create(Request $request)
+    {
+        $param = [
+            'questionID' => $request->questionID,
+            'title' => $request->title,
+            'date' => $request->date,
+            'userID' => $request->userID,
+            'main' => $request->main,
+        ];
+        DB::table('Question') ->insert($param);
+        return redirect('/test');
+    }
+
     
     public function post(Request $request)
     {

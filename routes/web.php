@@ -30,12 +30,18 @@ Route::get('/', function () {
 Route::get('hello', 'HelloController@index')
     ->middleware(HelloMiddleware::class);
 */
-Route::get('hello', 'HelloController@nayami');
+Route::get('hello', 'HelloController@index');
 Route::post('hello', 'HelloController@post');
 
 
+Route::get('test', 'HelloController@nayami');
+
 Route::get('hello/add', 'HelloController@add');
 Route::post('hello/add', 'HelloController@create');
+
+Route::get('test/add', 'HelloController@nayami_add');
+Route::post('test/add', 'HelloController@nayami_create');
+
 
 Route::get('hello/edit', 'HelloController@edit');
 Route::post('hello/edit', 'HelloController@update');
@@ -64,7 +70,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/test/menu', 'Test\MenuController@menu');
+Route::get('/test/test', 'Test\MenuController@test');
+Route::get('/test/nayami', 'Test\MenuController@nayami');
