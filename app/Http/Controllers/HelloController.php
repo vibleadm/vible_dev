@@ -30,6 +30,16 @@ class HelloController extends Controller
         return view('test.add');
     }
 
+    public function show_user(Request $request)
+    {
+        $id = Auth::id();
+        $items = DB::table('users')->where('id',$id)->first();
+	return view('test.mypage',['items'=>$items]);
+    }
+
+
+
+
     public function nayami_create(Request $request)
     {
         $param = [
@@ -95,8 +105,8 @@ class HelloController extends Controller
 
     public function ses_get(Request $request)
     {
-        $sesdata = $request->session()->get('msg');
-        return view('hello.session', ['session_data' => $sesdata]);
+        $sesdata = $request->session()->get('id');
+        return view('layouts.layout', ['session_data' => $sesdata]);
     }
 
     public function ses_put(Request $request)
@@ -105,6 +115,8 @@ class HelloController extends Controller
         $request->session()->put('msg', $msg);
         return redirect('hello/session');
     }
-    
+
+
+
     
 }

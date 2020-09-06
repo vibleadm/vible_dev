@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\HelloMiddleware;
-
+use Illuminate\Auth\Middleware\Authenticate;
 
 
 
@@ -30,8 +30,9 @@ Route::get('/', function () {
 Route::get('hello', 'HelloController@index')
     ->middleware(HelloMiddleware::class);
 */
-Route::get('hello', 'HelloController@index');
+Route::get('hello', 'HelloController@index')->middleware('auth');
 Route::post('hello', 'HelloController@post');
+
 
 
 Route::get('test', 'HelloController@nayami');
@@ -68,8 +69,19 @@ Route::get('person', 'PersonController@index');
 
 Auth::routes();
 
+
+Route::get('profile', function() {
+    // 認証済みのユーザーのみが入れる
+})->middleware('auth');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/test/menu', 'Test\MenuController@menu');
 Route::get('/test/test', 'Test\MenuController@test');
 Route::get('/test/nayami', 'Test\MenuController@nayami');
+
+
+
+
+Route::get('/test/mypage', 'HelloController@show_user')->middleware('auth');
+Route::get('/logout', 'Auth\LoginController@logout');
