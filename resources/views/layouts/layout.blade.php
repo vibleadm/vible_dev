@@ -12,12 +12,12 @@
 @endguest
 
 <header>
-    <p><a href="/">VIBLE</a></p>
+    <p><a href="/test">VIBLE</a></p>
     <nav class="pc-nav">
 	<ul>
         <li><a href="/">TOP</a></li>
         @auth
-            <li><a href="/mypage">MYPAGE</a></li>
+            <li><a href="/test/mypage">MYPAGE</a></li>
 		    <li><a href="/logout">LOGOUT</a></li>
         @endauth
         @guest
