@@ -26,62 +26,35 @@ Route::get('/', function () {
 });
 
 
-/*
-Route::get('hello', 'HelloController@index')
-    ->middleware(HelloMiddleware::class);
-*/
-Route::get('hello', 'HelloController@index')->middleware('auth');
-Route::post('hello', 'HelloController@post');
+Route::get('test', 'PostsController@index');
+Route::get('/test/nayami/{id}', 'PostsController@show');
+Route::get('/test/mypage/tweet/{id}', 'PostsController@tw_show');
+
+
+Route::get('test/mypage', 'PostsController@mypage')->middleware('auth');
+
+//名前のリンクから飛んでくるとき用
+Route::post('test/mypage', 'PostsController@create')->middleware('auth');
+Route::post('test/mypage/tweet', 'PostsController@tw_create')->middleware('auth');
+
+
+Route::post('/test/nayami/{id}', 'PostsController@nayami_answer')->middleware('auth');
+Route::post('/test/mypage/tweet/{id}', 'PostsController@tw_comment')->middleware('auth');
 
 
 
-Route::get('test', 'HelloController@nayami');
-
-Route::get('hello/add', 'HelloController@add');
-Route::post('hello/add', 'HelloController@create');
-
-Route::get('test/add', 'HelloController@nayami_add');
-Route::post('test/add', 'HelloController@nayami_create');
-
-
-Route::get('hello/edit', 'HelloController@edit');
-Route::post('hello/edit', 'HelloController@update');
-
-Route::get('hello/show', 'HelloController@show');
-
-
-Route::get('hello/session', 'HelloController@ses_get');
-Route::post('hello/session', 'HelloController@ses_put');
-/*
-Route::get('hello', function () {
-    return '<html><body><h1>HELLO</h1><p>This is sample page.
-        </p></body></html>';
-});
-
-
-Route::get('hello', 'HelloController@index');
-Route::get('hello/other', 'HelloController@other');
-*/
-
-Route::get('person', 'PersonController@index');
-
-
-
-Auth::routes();
-
-
-Route::get('profile', function() {
-    // 認証済みのユーザーのみが入れる
-})->middleware('auth');
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/test/menu', 'Test\MenuController@menu');
-Route::get('/test/test', 'Test\MenuController@test');
-Route::get('/test/nayami', 'Test\MenuController@nayami');
+Route::get('test/add', 'PostsController@nayami_add')->middleware('auth');
+Route::post('test/add', 'PostsController@nayami_create')->middleware('auth');
 
 
 
 
-Route::get('/test/mypage', 'HelloController@show_user')->middleware('auth');
+
+
+
+Route::get('hello/session', 'UsersController@ses_get');
+Route::post('hello/session', 'UsersController@ses_put');
 Route::get('/logout', 'Auth\LoginController@logout');
+
+//ホーム画面のLogin,Registerの表示をしてくれる
+Route::auth();
