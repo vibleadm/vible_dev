@@ -7,7 +7,11 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
+@if(isset($access)) 
 <h1>{{$access}}さんのマイページ</h1>
+@else
+<h1>{{$myname}}さんのマイページ</h1>
+@endif
 
 @section('content')
 
