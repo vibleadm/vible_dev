@@ -18,12 +18,12 @@ class PostsController extends Controller
         $posts = Question::all();
         $post = Question::findOrFail(27); 
         
-
+        $id = Auth::id();
+        $whoami = DB::table('users')->where('id',$id)->first();
         //$posts2 = Question::get('qid');
 
         $like = $post->likes()->where('user_id', Auth::user()->id)->first();
         //var_dump($like);
-        $posts3 = [];
         foreach($posts as $post2){
             //こいつもオブジェクト
             
@@ -65,14 +65,7 @@ class PostsController extends Controller
             
         }
         
-        
-        
-
-        //$post = Question::findorFail($post2); 
-        //$like = $like + $post->likes()->where('user_id', Auth::user()->id)->first();
-
-        return view('test.nayami')->with(array('items'=>$posts,'post2'=>$post2,'like' => $like));
-        //return view('test.nayami', ['items' => $posts]);
+        return view('test.nayami')->with(array('items'=>$posts,'post2'=>$post2,'like' => $like, 'whoami'=>$whoami));
     }
 /*
     public function show($id) {
@@ -229,21 +222,6 @@ class PostsController extends Controller
         //$like = $id;
         return view('test.nayami_detail')->with(array('post3'=>$post3,'answers'=>$answers,'post' => $post, 'like' => $like, 'items'=>$posts));
     }
-
-    /*
-    public function show3($id) {
-        $post = Post::findOrFail($id); // findOrFail 見つからなかった時の例外処理
-  
-        $like = $post->likes()->where('user_id', Auth::user()->id)->first();
-        
-        //$like = $post->where('user_id', Auth::user()->id)->first();
-        return view('posts.show')->with(array('post' => $post, 'like' => $like));
-      }
-    */
-
-
-
-
 
 
 }

@@ -21,11 +21,16 @@
 
 
     <tr>
+    <!--
     <form name="otameshi" action="/test/mypage" method="post">
+    -->
+    <form action="/test/mypage" method="post">
     @csrf
     @foreach($answers as $answer)
     <td><input type="submit" name="id" value="{{$answer->userID}}"></td>
+    <!--
     <td><a href="/test/mypage" onclick="javascript:document.otameshi.submit();return false;">{{$answer->userID}}</a></td>
+    -->
     <td>{{$answer->main}}</td>
     </tr>
     @endforeach

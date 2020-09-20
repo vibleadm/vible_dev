@@ -32,8 +32,6 @@ Route::get('test', 'PostsController@index');
 //こいつがあると名前からmypage飛ぶのが妨害される。。
 //Route::post('test/{id}', 'PostsController@index');
 
-//Route::get('/test/{id}', 'PostsController@show');
-//Route::post('/test/{id}', 'PostsController@show');
 Route::get('/test/mypage/tweet/{id}', 'PostsController@tw_show');
 
 

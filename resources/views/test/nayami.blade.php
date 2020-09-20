@@ -14,6 +14,12 @@
 </head>
 
 @section('content')
+@auth
+<p>↓マイページ↓</p>
+<form action="/test/mypage" method="post">
+<td><input type="submit" name="id" value="{{$whoami->name}}"></td>
+@endauth
+
 <br>
 <h2>投稿された悩み一覧(クリックで詳細とぶ)</h2>
 <br>

@@ -16,7 +16,9 @@
     <li class="nav-item"><a href="/">TOP</a></li>
 
         @auth
+        <!--
         <li class="nav-item"><a href="/test/mypage">MYPAGE</a></li>
+        -->
         <li class="nav-item"><a href="/logout">LOGOUT</a></li>
         @endauth
 
