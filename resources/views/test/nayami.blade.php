@@ -17,7 +17,9 @@
 @auth
 <p>↓マイページ↓</p>
 <form action="/test/mypage" method="post">
-<td><input type="submit" name="id" value="{{$whoami->name}}"></td>
+    @csrf
+    <td><input type="submit" name="id" value="{{$whoami->name}}"></td>
+</form>
 @endauth
 
 <br>
@@ -26,51 +28,37 @@
 <body>
 <p><a href="/test/add" >ログインして悩みを投稿しよう</a></p>
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
 </body>
 
-
-
-<h2>
-<body>
-	<table>
-	@foreach($items as $item)
-		<tr>
-			<td><a href="{{ action('PostsController@show2', $item->qid) }}">{{$item->title}}</a></td>
-			<td>{{$item->userID}}</td>
-            <!--
-			<td>{{$item->liked}}</td>
-            -->
-			<td>
-			@if($item->liked)
-            <p>うんこif</p>
-            {{ Form::model($item, array('action' => array('LikesController@destroy', $item->qid, $item->liked->id))) }}
-                <button type="submit">
-                <i class="fas fa-heart"></i>
-                いいね {{ $item->likes_count }}
-                </button>
-            {!! Form::close() !!}
-            @else
-            <p>うんこelse</p>
-            {{ Form::model($item, array('action' => array('LikesController@store', $item->qid))) }}
-                <button type="submit">
-                <i class="far fa-heart"></i>
-                いいね {{ $item->likes_count }}
-                </button>
-            {!! Form::close() !!}
-            @endif
-			</td>
-		
-
-		</tr>
-	@endforeach
-	</table>
-</body>
-</h2>
-
-
-
-
+<h3>
+<table>
+@foreach($items as $item)
+<tr>
+<td><a href="{{ action('PostsController@show2', $item->qid) }}">{{$item->title}}</a></td>
+<td>{{$item->userID}}</td>
+<td>
+    @if($item->liked)
+    <p>うんこif</p>
+    {{ Form::model($item, array('action' => array('LikesController@destroy', $item->qid, $item->liked->id))) }}
+    <button type="submit">
+    <i class="fas fa-heart"></i>
+    いいね {{ $item->likes_count }}
+    </button>
+    {!! Form::close() !!}
+    @else
+    <p>うんこelse</p>
+    {{ Form::model($item, array('action' => array('LikesController@store', $item->qid))) }}
+    <button type="submit">
+    <i class="far fa-heart"></i>
+    いいね {{ $item->likes_count }}
+    </button>
+    {!! Form::close() !!}
+    @endif
+</td>
+</tr>
+@endforeach
+</table>
+</h3>
 
 @endsection
-
-</html>

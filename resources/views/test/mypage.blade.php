@@ -5,10 +5,11 @@
 <head>
   <!-- Bootstrap用CSSの読み込み -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 </head>
 
 @if(isset($access)) 
-<h1>{{$access}}さんのマイページ</h1>
+<h1>{{$access}}さんのマイページうんこ</h1>
 @else
 <h1>{{$myname}}さんのマイページ</h1>
 @endif
@@ -20,7 +21,7 @@
 	<a class="nav-link active" href="/test/mypage">twitter</a>
 </li>
 <li class="nav-item">
-	<a class="nav-link" href="/test/mypage/vibles">vible</a>
+	<a class="nav-link" href="/test/mypage/vible">vible</a>
 </li>
 </ul>
 
@@ -58,17 +59,41 @@
 	<h2>ツイート一覧(クリックで詳細とぶ)</h2>
 	<br>
 
-	<h2>
 	<body>
+	<h3>
 	<table>
 	@foreach($items2 as $item)
 		<tr>
-			<td><a href="{{action('PostsController@tw_show',$item->tweetID)}}">{{$item->main}}</a></td>
-			<td>{{$item->userID}}</td>
+		<td><a href="{{action('PostsController@tw_show',$item->tweetID)}}">{{$item->main}}</a></td>
+		<td>{{$item->userID}}</td>
+		<!--
+		<td>うんこ{{$item->tweetID}}</td>
+		<td>いいね{{$item->likes_count}}</td>
+		<td>{{$item->liked}}</td>
+		-->
+		<td>
+		@if($item->liked)
+		<!--<p>うんこif</p>-->
+		{{ Form::model($item, array('action' => array('TweetLikesController@destroy', $item->tweetID, $item->liked->id))) }}
+			<button type="submit">
+			<i class="fas fa-heart"></i>
+			いいね {{ $item->likes_count }}
+			</button>
+		{!! Form::close() !!}
+		@else
+		<!--<p>うんこelse</p>-->
+		{{ Form::model($item, array('action' => array('TweetLikesController@store', $item->tweetID))) }}
+			<button type="submit">
+			<i class="far fa-heart"></i>
+			いいね {{ $item->likes_count }}
+			</button>
+		{!! Form::close() !!}
+		@endif
+		</td>
 		</tr>
 	@endforeach
 	</table>
-	</h2>
+	</h3>
 	</body>
 </div>
 @endsection

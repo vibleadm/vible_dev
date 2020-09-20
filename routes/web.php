@@ -35,10 +35,11 @@ Route::get('test', 'PostsController@index');
 Route::get('/test/mypage/tweet/{id}', 'PostsController@tw_show');
 
 
-Route::get('test/mypage', 'PostsController@mypage')->middleware('auth');
+Route::get('test/mypage', 'TweetController@mypage')->middleware('auth');
+
 
 //名前のリンクから飛んでくるとき用
-Route::post('test/mypage', 'PostsController@create')->middleware('auth');
+Route::post('test/mypage', 'PostsController@gotomypage')->middleware('auth');
 Route::post('test/mypage/tweet', 'PostsController@tw_create')->middleware('auth');
 
 
@@ -68,6 +69,10 @@ Route::auth();
 
 Route::post('/posts/{post}/likes', 'LikesController@store');
 Route::post('/posts/{post}/likes/{like}', 'LikesController@destroy');
+
+Route::post('/tweets/{tweet}/likes', 'TweetLikesController@store');
+Route::post('/tweets/{tweet}/likes/{like}', 'TweetLikesController@destroy');
+
 Route::get('/nayami/{id}', 'PostsController@show2');
 //Route::post('/posts/{id}', 'PostsController@show2');
 Route::post('/nayami/{id}', 'PostsController@nayami_answer');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Question;
+use App\Tweet;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,17 +17,17 @@ class PostsController extends Controller
         //こいつはオブジェクト
         //こいつのお尻にlike判定の0/1を追加したい
         $posts = Question::all();
-        $post = Question::findOrFail(27); 
+        //$post = Question::findOrFail(27); 
         
         $id = Auth::id();
         $whoami = DB::table('users')->where('id',$id)->first();
         //$posts2 = Question::get('qid');
 
-        $like = $post->likes()->where('user_id', Auth::user()->id)->first();
+        //$like = $post->likes()->where('user_id', Auth::user()->id)->first();
         //var_dump($like);
         foreach($posts as $post2){
             //こいつもオブジェクト
-            
+            //likesまでで、そのqidの投稿がどれだけlikesされてるか持ってきてくれる
             $like2 = $post2->likes()->where('user_id', Auth::user()->id)->first();
             if($like2 == null){
                 //likeまだしていなかったら０を追加
@@ -65,7 +66,7 @@ class PostsController extends Controller
             
         }
         
-        return view('test.nayami')->with(array('items'=>$posts,'post2'=>$post2,'like' => $like, 'whoami'=>$whoami));
+        return view('test.nayami')->with(array('items'=>$posts,'post2'=>$post2, 'whoami'=>$whoami));
     }
 /*
     public function show($id) {
@@ -78,7 +79,7 @@ class PostsController extends Controller
     }
 */
     public function tw_show($id) {
-        $post = DB::table('tweet')->where('tweetID',$id)->first();
+        $post = DB::table('tweets')->where('tweetID',$id)->first();
         $post2 = DB::table('ans_tweet')->where('tweetID',$id)->get();
         return view('test.tw_detail')->with([
             "item" => $post,
@@ -100,14 +101,15 @@ class PostsController extends Controller
         return redirect('/test');
     }
 
-
+    /*
     public function mypage(Request $request)
     {
         $id = Auth::id();
         $items = DB::table('users')->where('id',$id)->first();
 
         $user = $items->name;
-        $posts = DB::table('tweet')->where('userID',$user)->get();
+        //$posts = DB::table('tweets')->where('userID',$user)->get();
+        $posts = Tweet::where('userID',$user)->get();
         return view('test.mypage')->with([
             "user"=>$items,
             "items2" => $posts,
@@ -116,6 +118,7 @@ class PostsController extends Controller
         ]);
 
     }
+    */
 
     
 /*
@@ -143,19 +146,43 @@ class PostsController extends Controller
             'userID' => $items->name,
             'main' => $request->main
         ];
-        DB::insert('insert into tweet (userID,main) values (:userID,:main)', $param);
+        //DB::insert('insert into tweet (userID,main) values (:userID,:main)', $param);
+        DB::table('tweets') ->insert($param);
         return redirect('/test/mypage');
     }
 
 
 
-    public function create(Request $request)
+    public function gotomypage(Request $request)
     {
         $id = Auth::id();
         $items = DB::table('users')->where('id',$id)->first();
 
         $user = $items->name;
-        $posts = DB::table('tweet')->where('userID',$request->id)->get();
+        //$posts = DB::table('tweets')->where('userID',$user)->get();
+        $posts = Tweet::where('userID',$user)->get();
+
+        foreach($posts as $post2){
+            $like2 = $post2->likes()->where('user_id', Auth::user()->id)->first();
+            if($like2 == null){
+                //likeまだしていなかったら０を追加
+                $like2 = 0;
+                $post2->liked =$like2;
+            }
+            else{
+                //すでにlikeしていれば１を追加
+                //$like2 = 1;
+                $post2->liked =$like2;
+            }
+        
+        /*
+        echo('<pre>');
+        var_dump($posts);
+        echo('</pre>');
+        */
+
+        }
+
         return view('test.mypage')->with([
             "user"=>$items,
             "items2" => $posts,
