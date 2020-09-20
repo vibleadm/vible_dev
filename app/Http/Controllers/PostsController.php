@@ -14,32 +14,62 @@ class PostsController extends Controller
     {
         //$posts = DB::table('Questions')->get();
         //こいつはオブジェクト
+        //こいつのお尻にlike判定の0/1を追加したい
         $posts = Question::all();
+        $post = Question::findOrFail(27); 
         
 
         //$posts2 = Question::get('qid');
 
-        //$like = array();
-        //$like = $posts[1]->likes()->where('user_id', Auth::user()->id)->first();
-        //var_dump($like);
-        
+        $like = $post->likes()->where('user_id', Auth::user()->id)->first();
+        var_dump($like);
+        $posts3 = [];
         foreach($posts as $post2){
             //こいつもオブジェクト
             
-            $like = $post2->likes()->where('user_id', Auth::user()->id)->first();
-            $post2 ->append($like);
-            //var_dump($like);
-            echo "\n";
-            //$like  = array_merge($like,$like2);
+            $like2 = $post2->likes()->where('user_id', Auth::user()->id)->first();
+            if($like2 == null){
+                //likeまだしていなかったら０を追加
+                $like2 = 0;
+                $post2->liked =$like2;
+                /*
+                echo('<pre>');
+                var_dump($post2);
+                echo('</pre>');
+                */
+                
+                //$post2 =array_merge(array($post2),$like2);
+                //$post2->liked =$like2;
+
+            }
+            else{
+                //すでにlikeしていれば１を追加
+                //$like2 = 1;
+                $post2->liked =$like2;
+                
+                echo('<pre>');
+                var_dump($post2);
+                echo('</pre>');
+                
+                //$post2->liked =$like2;
+            }
+
+            //$posts ->append(array($post2));
+            /*
+            echo('<pre>');
+            var_dump($posts);
+            echo('</pre>');
+            */
+            
         }
-        var_dump($post2);
+        
         
         
 
         //$post = Question::findorFail($post2); 
         //$like = $like + $post->likes()->where('user_id', Auth::user()->id)->first();
 
-        return view('test.nayami')->with(array('items'=>$posts,'post'=>$like,'like' => $like));
+        return view('test.nayami')->with(array('items'=>$posts,'post2'=>$post2,'like' => $like));
         //return view('test.nayami', ['items' => $posts]);
     }
 /*
