@@ -28,7 +28,9 @@ Route::get('/', function () {
 Route::get('/', 'HomeController@index');
 
 Route::get('test', 'PostsController@index');
-Route::post('test/{id}', 'PostsController@index');
+
+//こいつがあると名前からmypage飛ぶのが妨害される。。
+//Route::post('test/{id}', 'PostsController@index');
 
 //Route::get('/test/{id}', 'PostsController@show');
 //Route::post('/test/{id}', 'PostsController@show');
@@ -42,7 +44,7 @@ Route::post('test/mypage', 'PostsController@create')->middleware('auth');
 Route::post('test/mypage/tweet', 'PostsController@tw_create')->middleware('auth');
 
 
-Route::post('/test/nayami/{id}', 'PostsController@nayami_answer')->middleware('auth');
+//Route::post('/test/nayami/{id}', 'PostsController@nayami_answer')->middleware('auth');
 Route::post('/test/mypage/tweet/{id}', 'PostsController@tw_comment')->middleware('auth');
 
 
@@ -68,8 +70,9 @@ Route::auth();
 
 Route::post('/posts/{post}/likes', 'LikesController@store');
 Route::post('/posts/{post}/likes/{like}', 'LikesController@destroy');
-Route::get('/posts/{id}', 'PostsController@show2');
-Route::post('/posts/{id}', 'PostsController@show2');
+Route::get('/nayami/{id}', 'PostsController@show2');
+//Route::post('/posts/{id}', 'PostsController@show2');
+Route::post('/nayami/{id}', 'PostsController@nayami_answer');
 
 
 

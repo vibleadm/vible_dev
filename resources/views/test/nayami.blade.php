@@ -15,13 +15,13 @@
 
 @section('content')
 <br>
-<h2>投稿内容一覧(クリックで詳細とぶ)</h2>
+<h2>投稿された悩み一覧(クリックで詳細とぶ)</h2>
 <br>
 <body>
 <p><a href="/test/add" >ログインして悩みを投稿しよう</a></p>
 </body>
 
-<p>{{$like}}</p>
+
 
 <h2>
 <body>
@@ -30,20 +30,22 @@
 		<tr>
 			<td><a href="{{ action('PostsController@show2', $item->qid) }}">{{$item->title}}</a></td>
 			<td>{{$item->userID}}</td>
+            <!--
 			<td>{{$item->liked}}</td>
+            -->
 			<td>
 			@if($item->liked)
             <p>うんこif</p>
             {{ Form::model($item, array('action' => array('LikesController@destroy', $item->qid, $item->liked->id))) }}
                 <button type="submit">
-                Like {{ $item->likes_count }}
+                いいね {{ $item->likes_count }}
                 </button>
             {!! Form::close() !!}
             @else
             <p>うんこelse</p>
             {{ Form::model($item, array('action' => array('LikesController@store', $item->qid))) }}
                 <button type="submit">
-                Like {{ $item->likes_count }}
+                いいね {{ $item->likes_count }}
                 </button>
             {!! Form::close() !!}
             @endif

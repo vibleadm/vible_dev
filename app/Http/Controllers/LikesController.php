@@ -19,15 +19,13 @@ class LikesController extends Controller
           array(
             'user_id' => Auth::user()->id,
             'qid' => $qid,
-            'post_id' => 1,
-            //'qid' => 1
           )
         );
 
         //$post = Post::findOrFail($postId);
         $post = Question::findOrFail($qid);
 
-        //return redirect('/test');
+        return redirect('/test');
 
         //return redirect()
           //   ->action('PostsController@show2', $post->id);
@@ -38,7 +36,7 @@ class LikesController extends Controller
       $post = Question::findOrFail($postId);
       $post->like_by()->findOrFail($likeId)->delete();
 
-      //return redirect('/test');
+      return redirect('/test');
 
       //return redirect()
             // ->action('PostsController@show2', $post->id);

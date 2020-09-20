@@ -22,7 +22,7 @@ class PostsController extends Controller
         //$posts2 = Question::get('qid');
 
         $like = $post->likes()->where('user_id', Auth::user()->id)->first();
-        var_dump($like);
+        //var_dump($like);
         $posts3 = [];
         foreach($posts as $post2){
             //こいつもオブジェクト
@@ -47,10 +47,12 @@ class PostsController extends Controller
                 //$like2 = 1;
                 $post2->liked =$like2;
                 
+                /*
                 echo('<pre>');
                 var_dump($post2);
                 echo('</pre>');
-                
+                */
+
                 //$post2->liked =$like2;
             }
 
@@ -167,6 +169,8 @@ class PostsController extends Controller
             'myname' => $user,
             'access' => $request->id,
         ]);
+        
+        
 
     }
 
@@ -199,8 +203,10 @@ class PostsController extends Controller
             'title' => $request->title,
             'userID' => $items->name,
             'main' => $request->main,
+            //いいね数初期化設定する
+            'likes_count' => 0,
         ];
-        DB::table('Question') ->insert($param);
+        DB::table('Questions') ->insert($param);
         return redirect('/test');
     }
 
@@ -215,15 +221,16 @@ class PostsController extends Controller
         $posts = DB::table('questions')->get();
         //$post = DB::table('posts')->get();
         $post3 = DB::table('posts')->where('id',$id)->get(); // findOrFail 見つからなかった時の例外処理
-        $post4 = Question::all();
+        $answers = DB::table('ans_Question')->where('questionID',$id)->get();
         //$post = Post::findorFail($id); 
         $post = Question::findorFail($id); 
         $like = $post->likes()->where('user_id', Auth::user()->id)->first();
         //$like = $post->where('user_id', Auth::user()->id)->first();
         //$like = $id;
-        return view('test.nayami')->with(array('post3'=>$post3,'post4'=>$post4,'post' => $post, 'like' => $like, 'items'=>$posts));
+        return view('test.nayami_detail')->with(array('post3'=>$post3,'answers'=>$answers,'post' => $post, 'like' => $like, 'items'=>$posts));
     }
 
+    /*
     public function show3($id) {
         $post = Post::findOrFail($id); // findOrFail 見つからなかった時の例外処理
   
@@ -232,6 +239,7 @@ class PostsController extends Controller
         //$like = $post->where('user_id', Auth::user()->id)->first();
         return view('posts.show')->with(array('post' => $post, 'like' => $like));
       }
+    */
 
 
 
