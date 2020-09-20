@@ -19,6 +19,7 @@
 <br>
 <body>
 <p><a href="/test/add" >ログインして悩みを投稿しよう</a></p>
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 </body>
 
 
@@ -38,6 +39,7 @@
             <p>うんこif</p>
             {{ Form::model($item, array('action' => array('LikesController@destroy', $item->qid, $item->liked->id))) }}
                 <button type="submit">
+                <i class="fas fa-heart"></i>
                 いいね {{ $item->likes_count }}
                 </button>
             {!! Form::close() !!}
@@ -45,6 +47,7 @@
             <p>うんこelse</p>
             {{ Form::model($item, array('action' => array('LikesController@store', $item->qid))) }}
                 <button type="submit">
+                <i class="far fa-heart"></i>
                 いいね {{ $item->likes_count }}
                 </button>
             {!! Form::close() !!}
