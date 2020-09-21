@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Route::get('/', 'HomeController@index');
 
-Route::get('test', 'PostsController@index');
+Route::get('test', 'PostsController@index')->middleware('auth');
 
 //こいつがあると名前からmypage飛ぶのが妨害される。。
 //Route::post('test/{id}', 'PostsController@index');

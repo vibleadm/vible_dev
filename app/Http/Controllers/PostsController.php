@@ -226,7 +226,7 @@ class PostsController extends Controller
             //いいね数初期化設定する
             'likes_count' => 0,
         ];
-        DB::table('Questions') ->insert($param);
+        DB::table('questions') ->insert($param);
         return redirect('/test');
     }
 
