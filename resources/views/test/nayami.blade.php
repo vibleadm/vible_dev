@@ -31,6 +31,69 @@
 
 </body>
 
+<!--
+<head>
+<meta charset="utf-8">
+<title>sample</title>
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script>
+$(function(){ // 遅延処理
+$('#button').click(
+function() {
+  $.ajax({
+    type: 'GET',
+    url: '/sample2', // url: は読み込むURLを表す
+    dataType: 'html', // 読み込むデータの種類を記入
+  }).done(function (results) {
+    // 通信成功時の処理
+    $('#text').html(results);
+  }).fail(function (err) {
+    // 通信失敗時の処理
+    alert('ファイルの取得に失敗しました。');
+  });
+}
+);
+});
+</script>
+</head>
+<body>
+<input type="button" id="button" value="「sample2.html」取得" />
+<br>
+<div id="text"></div>
+</body>
+-->
+
+<head>
+<meta charset="utf-8">
+<title>sample</title>
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script>
+$(function(){ // 遅延処理
+$('#button').click(
+function() {
+  $.ajax({
+    type: 'GET',
+    url: '/sample2', // url: は読み込むURLを表す
+    dataType: 'html', // 読み込むデータの種類を記入
+  }).done(function (results) {
+    // 通信成功時の処理
+    $('#text').html(results);
+  }).fail(function (err) {
+    // 通信失敗時の処理
+    alert('ファイルの取得に失敗しました。');
+  });
+}
+);
+});
+</script>
+</head>
+<body>
+<input type="button" id="button" value="「sample2.html」取得" />
+<br>
+<div id="text"></div>
+</body>
+
+
 <h3>
 <table>
 @foreach($items as $item)

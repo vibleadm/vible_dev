@@ -27,6 +27,12 @@ Route::get('/', function () {
 
 Route::get('/', 'HomeController@index');
 
+//↓ajax用おためし
+Route::get('/sample2', function () {
+    return view('test/sample2');
+});
+//↑ここまで
+
 Route::get('test', 'PostsController@index');
 
 //こいつがあると名前からmypage飛ぶのが妨害される。。
