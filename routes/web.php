@@ -28,9 +28,7 @@ Route::get('/', function () {
 Route::get('/', 'HomeController@index');
 
 //↓ajax用おためし
-Route::get('/sample2', function () {
-    return view('test/sample2');
-});
+Route::post('/sample2', 'PostsController@sample2');
 //↑ここまで
 
 Route::get('test', 'PostsController@index');
@@ -86,5 +84,10 @@ Route::post('/nayami/{id}', 'PostsController@nayami_answer');
 
 
 Route::get('/question', 'QuestionController@index');
-
+Route::get('ajax',function() {
+    return view('message');
+ });
+ Route::post('laravel/ajax',function() {
+    return view('test/nayami');
+ });
 

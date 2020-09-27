@@ -251,4 +251,12 @@ class PostsController extends Controller
     }
 
 
+
+    public function sample2() {
+        $test = 2;
+        return view('test.sample2')->with(array('test'=>$test));
+    }
+
+
+
 }
