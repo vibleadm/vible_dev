@@ -30,80 +30,6 @@
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 </body>
 
-<!--
-<head>
-<meta charset="utf-8">
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<title>sample</title>
-<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-<script>
-// jsのajax使う前に記述
-//metaのやつも必要
-//こいつはqidのこと
-var post = 28;
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-$(function(){ // 遅延処理
-$('#store').click(
-function() {
-  $.ajax({
-    type: 'POST',
-    url: '/posts/'+ post + '/likes', // url: は読み込むURLを表す
-    //url: action('PostsController@show2'),
-    dataType: 'html', // 読み込むデータの種類を記入
-    success: function() {
-                console.log('成功');
-    },
-  }).done(function (results) {
-    // 通信成功時の処理
-    $('#text').html(results);
-  }).fail(function (err) {
-    // 通信失敗時の処理
-    alert('ファイルの取得に失敗しました。');
-  });
-}
-);
-});
-</script>
-</head>
-
-<body>
-<button id="button">btn01</button>
-<div id="text"></div>
-</body>
-
--->
-
-<!--
-@foreach($items as $item)
-<body>
-<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-<script>
-var test = '{{$item->qid}}';
-console.log(test);
-</script>
-</body>
-@endforeach
--->
-
-@foreach($items as $item)
-<button id="{{$item->qid}}">うんこ</button>
-<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-<script>
-$("#{{$item->qid}}").click(function(e){
-  console.log(this);
-  //console.log($(this));
-  //console.log(e);
-  //console.log($(e));
-});
-</script>
-@endforeach
-
-
-
 
 <h3>
 <table>
@@ -115,12 +41,79 @@ $("#{{$item->qid}}").click(function(e){
 <td>
     @if($item->liked)
     <p>うんこif</p>
+    <!--
     {{ Form::model($item, array('action' => array('LikesController@destroy', $item->qid, $item->liked->id))) }}
     <button id="destroy">
     <i class="fas fa-heart"></i>
+    <span class="likesCount">
     いいね {{ $item->likes_count }}
+    </span>
     </button>
     {!! Form::close() !!}
+    -->
+    <button class="{{$item->qid}}">
+    <i class="fas fa-heart"></i>
+    <span class="likesCount">
+    いいね {{ $item->likes_count }}
+    </span>
+    </button>
+
+    <head>
+    <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>sample</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+    
+    //console.log(liked);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $(function(){ // 遅延処理
+    $('.{{$item->qid}}').click(
+    function() {
+      var liked = '{{$item->liked->id}}';
+      var post = '{{$item->qid}}';
+      var $this = $(this);
+      console.log(post);
+      console.log(liked);
+      console.log('うんこ！');
+
+      $.ajax({
+        type: 'POST',
+        url: '/posts/'+ post + '/likes/'+ liked, // url: は読み込むURLを表す
+        //url: action('PostsController@show2'),
+        dataType: 'html', // 読み込むデータの種類を記入
+        data : {'qid':post},
+        //success: function() {
+          //console.log('成功');
+          //console.log(this);
+        //},
+      }).done(function (data) {
+        // 通信成功時の処理
+        //console.log(this);
+        console.log('{{$item->qid}}');
+        console.log('うんこ成功');
+        //console.log(data);
+        //$this.children('.likesCount').html('data.postLikesCount');
+        $this.children('span').html('いいね {{ $item->likes_count - 1}}');
+        $this.children('i').toggleClass('far'); //塗りつぶしハート
+      }).fail(function (err) {
+        // 通信失敗時の処理
+        alert('ファイルの取得に失敗しました。');
+      });
+    }
+    );
+    });
+
+    </script>
+
+    
+
+
+
 
 
 
@@ -128,11 +121,11 @@ $("#{{$item->qid}}").click(function(e){
     @else
     <p>うんこelse</p>
     <button class="{{$item->qid}}">
-    <i class="far fa-heart"></i><span>
-    いいねうんこ {{ $item->likes_count }}</span>
+    <i class="far fa-heart"></i>
+    <span class="likesCount">
+    いいね {{ $item->likes_count }}
+    </span>
     </button>
-
-
 
     <head>
     <meta charset="utf-8">
@@ -150,8 +143,9 @@ $("#{{$item->qid}}").click(function(e){
     $(function(){ // 遅延処理
     $('.{{$item->qid}}').click(
     function() {
-      var $this = $(this);
+      
       var post = '{{$item->qid}}';
+      var $this = $(this);
       console.log(post);
       console.log('うんこ！');
 
@@ -160,15 +154,20 @@ $("#{{$item->qid}}").click(function(e){
         url: '/posts/'+ post + '/likes', // url: は読み込むURLを表す
         //url: action('PostsController@show2'),
         dataType: 'html', // 読み込むデータの種類を記入
-        success: function() {
-          console.log('成功');
-          console.log(this);
-        },
-      }).done(function (results) {
+        data : {'qid':post},
+        //success: function() {
+          //console.log('成功');
+          //console.log(this);
+        //},
+      }).done(function (data) {
         // 通信成功時の処理
-        $this.children('span').html('いいねうんこ {{ $item->likes_count }}');
+        //console.log(this);
+        console.log('{{$item->qid}}');
+        console.log('うんこ成功');
+        //console.log(data);
+        //$this.children('.likesCount').html('data.postLikesCount');
+        $this.children('span').html('いいね {{ $item->likes_count + 1}}');
         $this.children('i').toggleClass('fas'); //塗りつぶしハート
-        //$('#text').html(results);
       }).fail(function (err) {
         // 通信失敗時の処理
         alert('ファイルの取得に失敗しました。');
@@ -178,6 +177,10 @@ $("#{{$item->qid}}").click(function(e){
     });
     </script>
     </head>
+
+
+
+    
     
     
     @endif

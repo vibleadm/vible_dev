@@ -17,6 +17,7 @@ class PostsController extends Controller
         //こいつはオブジェクト
         //こいつのお尻にlike判定の0/1を追加したい
         $posts = Question::all();
+        $postLikesCount = Question::select('likes_count')->get();
         //$post = Question::findOrFail(27); 
         
         $id = Auth::id();
@@ -26,7 +27,6 @@ class PostsController extends Controller
         //$like = $post->likes()->where('user_id', Auth::user()->id)->first();
         //var_dump($like);
         foreach($posts as $post2){
-            //こいつもオブジェクト
             //likesまでで、そのqidの投稿がどれだけlikesされてるか持ってきてくれる
             $like2 = $post2->likes()->where('user_id', Auth::user()->id)->first();
             if($like2 == null){
@@ -66,7 +66,7 @@ class PostsController extends Controller
             
         }
         
-        return view('test.nayami')->with(array('items'=>$posts,'post2'=>$post2, 'whoami'=>$whoami));
+        return view('test.nayami')->with(array('items'=>$posts,'post2'=>$post2, 'postLikesCount'=>$postLikesCount,'whoami'=>$whoami));
     }
 /*
     public function show($id) {
