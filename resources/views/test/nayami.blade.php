@@ -28,69 +28,6 @@
 <body>
 <p><a href="/test/add" >ログインして悩みを投稿しよう</a></p>
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-
-</body>
-
-<!--
-<head>
-<meta charset="utf-8">
-<title>sample</title>
-<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-<script>
-$(function(){ // 遅延処理
-$('#button').click(
-function() {
-  $.ajax({
-    type: 'GET',
-    url: '/sample2', // url: は読み込むURLを表す
-    dataType: 'html', // 読み込むデータの種類を記入
-  }).done(function (results) {
-    // 通信成功時の処理
-    $('#text').html(results);
-  }).fail(function (err) {
-    // 通信失敗時の処理
-    alert('ファイルの取得に失敗しました。');
-  });
-}
-);
-});
-</script>
-</head>
-<body>
-<input type="button" id="button" value="「sample2.html」取得" />
-<br>
-<div id="text"></div>
-</body>
--->
-
-<head>
-<meta charset="utf-8">
-<title>sample</title>
-<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-<script>
-$(function(){ // 遅延処理
-$('#button').click(
-function() {
-  $.ajax({
-    type: 'GET',
-    url: '/sample2', // url: は読み込むURLを表す
-    dataType: 'html', // 読み込むデータの種類を記入
-  }).done(function (results) {
-    // 通信成功時の処理
-    $('#text').html(results);
-  }).fail(function (err) {
-    // 通信失敗時の処理
-    alert('ファイルの取得に失敗しました。');
-  });
-}
-);
-});
-</script>
-</head>
-<body>
-<input type="button" id="button" value="「sample2.html」取得" />
-<br>
-<div id="text"></div>
 </body>
 
 
@@ -100,23 +37,152 @@ function() {
 <tr>
 <td><a href="{{ action('PostsController@show2', $item->qid) }}">{{$item->title}}</a></td>
 <td>{{$item->userID}}</td>
+<td>{{$item->qid}}</td>
 <td>
     @if($item->liked)
     <p>うんこif</p>
+    <!--
     {{ Form::model($item, array('action' => array('LikesController@destroy', $item->qid, $item->liked->id))) }}
-    <button type="submit">
+    <button id="destroy">
     <i class="fas fa-heart"></i>
+    <span class="likesCount">
     いいね {{ $item->likes_count }}
+    </span>
     </button>
     {!! Form::close() !!}
+    -->
+    <button class="{{$item->qid}}">
+    <i class="fas fa-heart"></i>
+    <span class="likesCount">
+    いいね {{ $item->likes_count }}
+    </span>
+    </button>
+
+    <head>
+    <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>sample</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+    
+    //console.log(liked);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $(function(){ // 遅延処理
+    $('.{{$item->qid}}').click(
+    function() {
+      var liked = '{{$item->liked->id}}';
+      var post = '{{$item->qid}}';
+      var $this = $(this);
+      console.log(post);
+      console.log(liked);
+      console.log('うんこ！');
+
+      $.ajax({
+        type: 'POST',
+        url: '/posts/'+ post + '/likes/'+ liked, // url: は読み込むURLを表す
+        //url: action('PostsController@show2'),
+        dataType: 'html', // 読み込むデータの種類を記入
+        data : {'qid':post},
+        //success: function() {
+          //console.log('成功');
+          //console.log(this);
+        //},
+      }).done(function (data) {
+        // 通信成功時の処理
+        //console.log(this);
+        console.log('{{$item->qid}}');
+        console.log('うんこ成功');
+        console.log(data);
+        //$this.children('.likesCount').html('data.postLikesCount');
+        $this.children('span').html('いいね {{ $item->likes_count - 1}}');
+        $this.children('i').toggleClass('far'); //塗りつぶしハート
+      }).fail(function (err) {
+        // 通信失敗時の処理
+        alert('ファイルの取得に失敗しました。');
+      });
+    }
+    );
+    });
+
+    </script>
+
+    
+
+
+
+
+
+
+
     @else
     <p>うんこelse</p>
-    {{ Form::model($item, array('action' => array('LikesController@store', $item->qid))) }}
-    <button type="submit">
+    <button class="{{$item->qid}}">
     <i class="far fa-heart"></i>
+    <span class="likesCount">
     いいね {{ $item->likes_count }}
+    </span>
     </button>
-    {!! Form::close() !!}
+
+    <head>
+    <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>sample</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+    
+    
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $(function(){ // 遅延処理
+    $('.{{$item->qid}}').click(
+    function() {
+      
+      var post = '{{$item->qid}}';
+      var $this = $(this);
+      console.log(post);
+      console.log('うんこ！');
+
+      $.ajax({
+        type: 'POST',
+        url: '/posts/'+ post + '/likes', // url: は読み込むURLを表す
+        //url: action('PostsController@show2'),
+        dataType: 'html', // 読み込むデータの種類を記入
+        data : {'qid':post},
+        //success: function() {
+          //console.log('成功');
+          //console.log(this);
+        //},
+      }).done(function (data) {
+        // 通信成功時の処理
+        //console.log(this);
+        console.log('{{$item->qid}}');
+        console.log('うんこ成功');
+        //console.log(data);
+        //$this.children('.likesCount').html('data.postLikesCount');
+        $this.children('span').html('いいね {{ $item->likes_count + 1}}');
+        $this.children('i').toggleClass('fas'); //塗りつぶしハート
+      }).fail(function (err) {
+        // 通信失敗時の処理
+        alert('ファイルの取得に失敗しました。');
+      });
+    }
+    );
+    });
+    </script>
+    </head>
+
+
+
+    
+    
+    
     @endif
 </td>
 </tr>
