@@ -91,3 +91,14 @@ Route::get('ajax',function() {
     return view('test/nayami');
  });
 
+
+Route::get('/', 'PostsController@index')->name('posts.index');
+
+//ログイン中のユーザーのみアクセス可能
+Route::group(['middleware' => ['auth']], function () {
+    //「ajaxlike.jsファイルのurl:'ルーティング'」に書くものと合わせる。
+    Route::post('ajaxlike', 'PostsController@ajaxlike')->name('posts.ajaxlike');
+});
+
+
+?>

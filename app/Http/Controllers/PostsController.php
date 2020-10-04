@@ -2,261 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Post;
-use App\Question;
-use App\Tweet;
-use Illuminate\Support\Facades\DB;
+use App\Like;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        //$posts = DB::table('Questions')->get();
-        //こいつはオブジェクト
-        //こいつのお尻にlike判定の0/1を追加したい
-        $posts = Question::all();
-        $postLikesCount = Question::select('likes_count')->get();
-        //$post = Question::findOrFail(27); 
+        $data = [];
+        // ユーザの投稿の一覧を作成日時の降順で取得
+        //withCount('テーブル名')とすることで、リレーションの数も取得できます。
+        $posts = Post::withCount('likes')->orderBy('created_at', 'desc')->paginate(10);
+        $liked = Like::where('user_id',1)->first();
+        $like_model = Like::all();
+
+        $data = [
+                'posts' => $posts,
+                'like_model'=>$like_model,
+                'liked'=>$liked,
+            ];
+
+        return view('posts.index', $data);
+    }
+
+        public function ajaxlike(Request $request)
+    {
+        $id = Auth::user()->id;
+        $post_id = $request->post_id;
+        $like = Like::all();
+        $post = Post::findOrFail($post_id);
+        //loadCountとすればリレーションの数を○○_countという形で取得できる（今回の場合はいいねの総数）
+        $postLikesCount = $post->loadCount('likes')->likes_count;
         
-        $id = Auth::id();
-        $whoami = DB::table('users')->where('id',$id)->first();
-        //$posts2 = Question::get('qid');
-
-        //$like = $post->likes()->where('user_id', Auth::user()->id)->first();
-        //var_dump($like);
-        foreach($posts as $post2){
-            //likesまでで、そのqidの投稿がどれだけlikesされてるか持ってきてくれる
-            $like2 = $post2->likes()->where('user_id', Auth::user()->id)->first();
-            if($like2 == null){
-                //likeまだしていなかったら０を追加
-                $like2 = 0;
-                $post2->liked =$like2;
-                /*
-                echo('<pre>');
-                var_dump($post2);
-                echo('</pre>');
-                */
-                
-                //$post2 =array_merge(array($post2),$like2);
-                //$post2->liked =$like2;
-
-            }
-            else{
-                //すでにlikeしていれば１を追加
-                //$like2 = 1;
-                $post2->liked =$like2;
-                
-                /*
-                echo('<pre>');
-                var_dump($post2);
-                echo('</pre>');
-                */
-
-                //$post2->liked =$like2;
-            }
-
-            //$posts ->append(array($post2));
-            /*
-            echo('<pre>');
-            var_dump($posts);
-            echo('</pre>');
-            */
-            
+        // 空でないなら
+        if ($like->where('post_id', $post_id)->where('user_id',1)) {
+            //likesテーブルのレコードを削除
+            $like = Like::where('post_id', $post_id)->where('user_id', $id)->delete();
+        } else {
+            //likesテーブルに新しいレコードを作成する
+            $like = new Like;
+            $like->post_id = $request->post_id;
+            $like->user_id = Auth::user()->id;
+            $like->save();
         }
         
-        return view('test.nayami')->with(array('items'=>$posts,'post2'=>$post2, 'postLikesCount'=>$postLikesCount,'whoami'=>$whoami));
-    }
-/*
-    public function show($id) {
-        $post = DB::table('Question')->where('questionID',$id)->first();
-        $post2 = DB::table('ans_Question')->where('questionID',$id)->get();
-        return view('test.nayami_detail')->with([
-            "item" => $post,
-            "items2" => $post2,
-        ]);
-    }
-*/
-    public function tw_show($id) {
-        $post = DB::table('tweets')->where('tweetID',$id)->first();
-        $post2 = DB::table('ans_tweet')->where('tweetID',$id)->get();
-        return view('test.tw_detail')->with([
-            "item" => $post,
-            "items2" => $post2,
-        ]);
-    }
 
-    public function tw_comment(Request $request)
-    {
-        $id = Auth::id();
-        $items = DB::table('users')->where('id',$id)->first();
-        
-        $param = [
-            'tweetID' => $request->tweetID,
-            'userID' => $items->name,
-            'main' => $request->main
+        //一つの変数にajaxに渡す値をまとめる
+        //今回ぐらい少ない時は別にまとめなくてもいいけど一応。笑
+        $json = [
+            'postLikesCount' => $postLikesCount,
         ];
-        DB::insert('insert into ans_tweet (tweetID,userID,main) values (:tweetID,:userID,:main)', $param);
-        return redirect('/test');
+        //下記の記述でajaxに引数の値を返す
+        return response()->json($json);
     }
-
-    /*
-    public function mypage(Request $request)
-    {
-        $id = Auth::id();
-        $items = DB::table('users')->where('id',$id)->first();
-
-        $user = $items->name;
-        //$posts = DB::table('tweets')->where('userID',$user)->get();
-        $posts = Tweet::where('userID',$user)->get();
-        return view('test.mypage')->with([
-            "user"=>$items,
-            "items2" => $posts,
-            'myname' => $user,
-            'access' => $request->id,
-        ]);
-
-    }
-    */
-
-    
-/*
-    public function create(Request $request)
-    {
-        $id = Auth::id();
-        $items = DB::table('users')->where('id',$id)->first();
-        
-        $param = [
-            'userID' => $items->name,
-            'main' => $request->main
-        ];
-        DB::insert('insert into tweet (userID,main) values (:userID,:main)', $param);
-        return redirect('/test/mypage');
-    }
-*/
-
-    
-    public function tw_create(Request $request)
-    {
-        $id = Auth::id();
-        $items = DB::table('users')->where('id',$id)->first();
-        
-        $param = [
-            'userID' => $items->name,
-            'main' => $request->main
-        ];
-        //DB::insert('insert into tweet (userID,main) values (:userID,:main)', $param);
-        DB::table('tweets') ->insert($param);
-        return redirect('/test/mypage');
-    }
-
-
-
-    public function gotomypage(Request $request)
-    {
-        $id = Auth::id();
-        $items = DB::table('users')->where('id',$id)->first();
-
-        $user = $items->name;
-        //$posts = DB::table('tweets')->where('userID',$user)->get();
-        $posts = Tweet::where('userID',$user)->get();
-
-        foreach($posts as $post2){
-            $like2 = $post2->likes()->where('user_id', Auth::user()->id)->first();
-            if($like2 == null){
-                //likeまだしていなかったら０を追加
-                $like2 = 0;
-                $post2->liked =$like2;
-            }
-            else{
-                //すでにlikeしていれば１を追加
-                //$like2 = 1;
-                $post2->liked =$like2;
-            }
-        
-        /*
-        echo('<pre>');
-        var_dump($posts);
-        echo('</pre>');
-        */
-
-        }
-
-        return view('test.mypage')->with([
-            "user"=>$items,
-            "items2" => $posts,
-            'myname' => $user,
-            'access' => $request->id,
-        ]);
-        
-        
-
-    }
-
-
-    
-    public function nayami_answer(Request $request)
-    {
-        $id = Auth::id();
-        $items = DB::table('users')->where('id',$id)->first();
-        
-        $param = [
-            'questionID' => $request->questionID,
-            'userID' => $items->name,
-            'main' => $request->main
-        ];
-        DB::insert('insert into ans_Question (questionID,userID,main) values (:questionID,:userID,:main)', $param);
-        return redirect('/test');
-    }
-
-    public function nayami_add(Request $request)
-    {
-        return view('test.add');
-    }
-
-    public function nayami_create(Request $request)
-    {
-        $id = Auth::id();
-        $items = DB::table('users')->where('id',$id)->first();
-        $param = [
-            'title' => $request->title,
-            'userID' => $items->name,
-            'main' => $request->main,
-            //いいね数初期化設定する
-            'likes_count' => 0,
-        ];
-        DB::table('Questions') ->insert($param);
-        return redirect('/test');
-    }
-
-
-
-    public function __construct()
-    {
-      $this->middleware('auth', array('except' => 'index'));
-    }
-
-    public function show2($id) {
-        $posts = DB::table('questions')->get();
-        //$post = DB::table('posts')->get();
-        $post3 = DB::table('posts')->where('id',$id)->get(); // findOrFail 見つからなかった時の例外処理
-        $answers = DB::table('ans_Question')->where('questionID',$id)->get();
-        //$post = Post::findorFail($id); 
-        $post = Question::findorFail($id); 
-        $like = $post->likes()->where('user_id', Auth::user()->id)->first();
-        //$like = $post->where('user_id', Auth::user()->id)->first();
-        //$like = $id;
-        return view('test.nayami_detail')->with(array('post3'=>$post3,'answers'=>$answers,'post' => $post, 'like' => $like, 'items'=>$posts));
-    }
-
-
-
-    public function sample2() {
-        $test = 2;
-        return view('test.sample2')->with(array('test'=>$test));
-    }
-
-
-
 }

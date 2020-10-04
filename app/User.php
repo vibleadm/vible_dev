@@ -37,8 +37,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+
+    //User.phpに下記を追記
+    // ユーザーの投稿
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    // ユーザーがいいねしている投稿
     public function likes()
     {
-      return $this->hasMany(Like::class);
+        return $this->hasMany(Like::class);
     }
 }

@@ -5,6 +5,12 @@ var likePostId;
 like.on('click', function () {
     var $this = $(this);
     likePostId = $this.data('postid');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
     $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
