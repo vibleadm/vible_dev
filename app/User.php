@@ -64,4 +64,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(QuestionLike::class);
     }
+
+
+
+
+    
+    public function answerquestions()
+    {
+        return $this->hasMany(AnswerQuestion::class);
+    }
+
+    // ユーザーがいいねしている投稿
+    public function answerquestionlikes()
+    {
+        return $this->hasMany(AnswerQuestionLike::class);
+    }
 }

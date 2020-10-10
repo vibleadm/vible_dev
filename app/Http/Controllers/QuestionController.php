@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Question;
 use App\QuestionLike;
+use App\AnswerQuestion;
+use App\AnswerQuestionLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -76,13 +78,56 @@ class QuestionController extends Controller
     public function detail($id) {
         $posts = DB::table('questions')->get();
         //$post = DB::table('posts')->get();
-        $post3 = DB::table('posts')->where('id',$id)->get(); // findOrFail 見つからなかった時の例外処理
-        $answers = DB::table('ans_Question')->where('questionID',$id)->get();
+        $answer_questions = AnswerQuestion::withCount('answer_question_likes')->orderBy('created_at', 'desc')->where('question_id',$id)->paginate(10);
+        $answers = DB::table('answer_questions')->where('question_id',$id)->get();
         //$post = Post::findorFail($id); 
         $post = Question::findorFail($id); 
-        //$like = $post->likes()->where('user_id', Auth::user()->id)->first();
-        //$like = $post->where('user_id', Auth::user()->id)->first();
-        //$like = $id;
-        return view('test.nayami_detail')->with(array('post3'=>$post3,'answers'=>$answers,'post' => $post, 'items'=>$posts));
+        $likes = AnswerQuestionLike::all();
+        return view('test.nayami_detail')->with(array('answer_questions'=>$answer_questions,'answers'=>$answers,'post' => $post, 'likes'=>$likes));
     }
+
+    public function nayami_answer(Request $request)
+    {
+        $id = Auth::id();
+        $items = DB::table('users')->where('id',$id)->first();
+        var_dump($request->question_id);
+        var_dump($request->content);
+        
+        $param = [
+            'question_id' => $request->question_id,
+            'user_id' => $id,
+            'content' => $request->content
+        ];
+        DB::insert('insert into answer_questions (question_id, user_id, content) values (:question_id,:user_id,:content)', $param);
+        return redirect('/test');
+    }
+
+    public function answer_question_like(Request $request)
+    {
+        //var_dump('うんこ');
+        //var_dump($request->answer_question_id);
+
+        
+        $id = Auth::user()->id;
+        $answer_question_id = $request->answer_question_id;
+        //var_dump($question_id);
+        
+        $like = AnswerQuestionLike::where('answer_question_id', $answer_question_id)->where('user_id', $id)->first();
+        $answer_question = AnswerQuestion::findOrFail($answer_question_id);
+
+        if ($like) {
+            //likesテーブルのレコードを削除
+            $like = AnswerQuestionLike::where('answer_question_id', $answer_question_id)->where('user_id', $id)->delete();
+        } else {
+            AnswerQuestionLike::create(['user_id' => $id, 'answer_question_id' => $answer_question_id]);
+        }
+
+        $answerquestionLikesCount = $answer_question->loadCount('answer_question_likes')->answer_question_likes_count;
+        //これがajaxのdataとして渡される
+        print($answerquestionLikesCount);  
+        
+    }
+
+
+    
 }
