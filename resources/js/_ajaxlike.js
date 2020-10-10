@@ -2,6 +2,7 @@ $(function () {
 var like = $('.js-like-toggle');
 var likePostId;
 
+
 like.on('click', function () {
     var $this = $(this);
     likePostId = $this.data('postid');
@@ -26,9 +27,10 @@ like.on('click', function () {
         .done(function (data) {
 //lovedクラスを追加
             $this.toggleClass('loved'); 
+            console.log('success!!!!!!!!!!');
 
 //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
-            $this.next('.likesCount').html(data.postLikesCount); 
+            $this.next('.likesCount').html(data); 
 
         })
         // Ajaxリクエストが失敗した場合

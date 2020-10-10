@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Like extends Model
 {
+    protected $fillable = ['user_id', 'post_id'];
     //Like.phpに下記を追記
      //いいねしているユーザー
      public function user()
