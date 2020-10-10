@@ -7,6 +7,9 @@ use App\Like;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use App\Question;
+use App\QuestionLike;
+use Illuminate\Support\Facades\DB;
 
 class PostsController extends Controller
 {
@@ -17,7 +20,7 @@ class PostsController extends Controller
         // ユーザの投稿の一覧を作成日時の降順で取得
         //withCount('テーブル名')とすることで、リレーションの数も取得できます。
         $posts = Post::withCount('likes')->orderBy('created_at', 'desc')->paginate(10);
-        $liked = Like::where('user_id',2)->first();
+        //$liked = Like::where('user_id',2)->first();
         $like_model = Like::all();
 
         /*
@@ -30,7 +33,6 @@ class PostsController extends Controller
         */
 
         $post = Post::findOrFail(1);
-        //var_dump($post);
         //loadCountとすればリレーションの数を○○_countという形で取得できる（今回の場合はいいねの総数）
         $postLikesCount = $post->loadCount('likes')->likes_count;
         var_dump($postLikesCount);
@@ -40,7 +42,7 @@ class PostsController extends Controller
         $data = [
                 'posts' => $posts,
                 'like_model'=>$like_model,
-                'liked'=>$liked,
+                //'liked'=>$liked,
                 //'like'=>$like,
             ];
 
@@ -79,8 +81,9 @@ class PostsController extends Controller
             */
         }
 
-        
+
         $postLikesCount = $post->loadCount('likes')->likes_count;
+        //これがajaxのdataとして渡される
         print($postLikesCount);
         
 
@@ -93,5 +96,63 @@ class PostsController extends Controller
         //return response()->json($json);
 
         
+    }
+
+    public function index2(Request $request)
+    {
+        //$posts = DB::table('Questions')->get();
+        //こいつはオブジェクト
+        //こいつのお尻にlike判定の0/1を追加したい
+        $posts = Question::all();
+        $postLikesCount = Question::select('likes_count')->get();
+        //$post = Question::findOrFail(27); 
+        
+        $id = Auth::id();
+        $whoami = DB::table('users')->where('id',$id)->first();
+        //$posts2 = Question::get('qid');
+
+        //$like = $post->likes()->where('user_id', Auth::user()->id)->first();
+        //var_dump($like);
+        foreach($posts as $post2){
+            //likesまでで、そのqidの投稿がどれだけlikesされてるか持ってきてくれる
+            $like2 = $post2->likes()->where('user_id', Auth::user()->id)->first();
+            if($like2 == null){
+                //likeまだしていなかったら０を追加
+                $like2 = 0;
+                $post2->liked =$like2;
+                /*
+                echo('<pre>');
+                var_dump($post2);
+                echo('</pre>');
+                */
+                
+                //$post2 =array_merge(array($post2),$like2);
+                //$post2->liked =$like2;
+
+            }
+            else{
+                //すでにlikeしていれば１を追加
+                //$like2 = 1;
+                $post2->liked =$like2;
+                
+                /*
+                echo('<pre>');
+                var_dump($post2);
+                echo('</pre>');
+                */
+
+                //$post2->liked =$like2;
+            }
+
+            //$posts ->append(array($post2));
+            /*
+            echo('<pre>');
+            var_dump($posts);
+            echo('</pre>');
+            */
+            
+        }
+        
+        return view('test.nayami')->with(array('items'=>$posts,'post2'=>$post2, 'postLikesCount'=>$postLikesCount,'whoami'=>$whoami));
     }
 }

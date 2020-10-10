@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 require('./_ajaxlike.js')
+require('./_questionlike.js')
 
 global.$ = global.jQuery = require('jquery');
 window.Vue = require('vue');
