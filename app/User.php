@@ -68,7 +68,7 @@ class User extends Authenticatable
 
 
 
-    
+
     public function answerquestions()
     {
         return $this->hasMany(AnswerQuestion::class);
@@ -79,4 +79,30 @@ class User extends Authenticatable
     {
         return $this->hasMany(AnswerQuestionLike::class);
     }
+
+
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class);
+    }
+    public function tweetlikes()
+    {
+        return $this->hasMany(TweetLike::class);
+    }
+
+
+
+    public function answertweets()
+    {
+        return $this->hasMany(AnswerTweet::class);
+    }
+
+    // ユーザーがいいねしている投稿
+    public function answertweetlikes()
+    {
+        return $this->hasMany(AnswerTweetLike::class);
+    }
+
+
+
 }

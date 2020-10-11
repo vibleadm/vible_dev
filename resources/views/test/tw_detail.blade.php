@@ -1,36 +1,69 @@
 <html>
+<head>
+<style>
+    body {font-size:16pt; color:#999;}
+    h1 {font-size:50pt; text-align:right; color:#f6f6f6;
+        margin:-20px 0px -30px 0px; letter-spacing:-4pt;}
 
-<h1>{{$item->main}}</h1>
-
-
-<h3>コメント (要ログイン)</h3>
-<form method="post">
-@csrf
-    <textarea rows="10" cols="80" name="main" class="form-control" required placeholder="アドバイスを入力してください"></textarea>
-    <br>
-    <input type="hidden" name="tweetID" value="{{$item->tweetID}}">
-    <input type="submit" value="送信">
-    <input type="reset" value="リセット">
-</form><br>
-
-<h3>コメント一覧(クリックでその人のマイページ飛ぶ)</h3>
-<h2>
-<table>
+    th {background-color:#999; color:fff; padding:5px 10px;}
+    td {border: solid 1px #aaa; color:#999; padding:5px 10px;}
+</style>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
 
 
-    <tr>
-    <form name="otameshi" action="/test/mypage" method="post">
+<body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+    <p>{{$tweet->content}}</p>
+
+
+    <h3>コメント (要ログイン)</h3>
+    <form method="post">
     @csrf
-    @foreach($items2 as $item2)
-        <td><input type="submit" name="id" value="{{$item2->userID}}"></td>
-        <td><a href="/test/mypage" onclick="javascript:document.otameshi.submit();return false;">{{$item2->userID}}</a></td>
-        <td>{{$item2->main}}</td>
+        <textarea rows="10" cols="80" name="content" class="form-control" required placeholder="アドバイスを入力してください"></textarea>
+        <br>
+        <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
+        <input type="submit" value="送信">
+        <input type="reset" value="リセット">
+    </form><br>
+
+    <h3>コメント一覧(クリックでその人のマイページ飛ぶ)</h3>
+    <h2>
+    <table>
+
+
+        
+        <form name="otameshi" action="/test/mypage" method="post">
+        @csrf
+        @foreach($answer_tweets as $answer_tweet)
+        <tr>
+            <td><input type="submit" name="id" value="{{$answer_tweet->user_id}}"></td>
+            <td><a href="/test/mypage" onclick="javascript:document.otameshi.submit();return false;">{{$answer_tweet->user_id}}</a></td>
+            <td>{{$answer_tweet->content}}</td>
+            <td>
+                @if($likes->where('user_id',Auth::user()->id)->where('answer_tweet_id',$answer_tweet->id)->first())
+                <p>うんこif</p>
+                <p class="favorite-marke">
+                    <a class="js-like-toggle loved" href="" data-answertweetid="{{$answer_tweet->id}}"><i class="fas fa-heart"></i></a>
+                    <span class="likesCount">{{$answer_tweet->answer_tweet_likes_count}}</span>
+                </p>
+
+                @else
+                <p>うんこelse</p>
+                <p class="favorite-marke">
+                    <a class="js-like-toggle" href="" data-answertweetid="{{ $answer_tweet->id }}"><i class="far fa-heart"></i></a>
+                    <span class="likesCount">{{$answer_tweet->answer_tweet_likes_count}}</span>
+                </p>
+                @endif
+            </td>
         </tr>
-    @endforeach
-    </form>
+        @endforeach
+        </form>
 
-</table>
-</h2>
-
-
+    </table>
+    </h2>
+    <script src="{{ mix('js/_answertweetlike.js') }}"></script>
+</body>
 </html>

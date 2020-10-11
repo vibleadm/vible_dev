@@ -81,24 +81,24 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/_answerquestionlike.js":
-/*!*********************************************!*\
-  !*** ./resources/js/_answerquestionlike.js ***!
-  \*********************************************/
+/***/ "./resources/js/_tweetlike.js":
+/*!************************************!*\
+  !*** ./resources/js/_tweetlike.js ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 $(function () {
   var like = $('.js-like-toggle');
-  var likeAnswerQuestionId;
+  var likeTweetId;
   like.on('click', function () {
     var $this = $(this);
-    likeAnswerQuestionId = $this.data('answerquestionid');
+    likeTweetId = $this.data('tweetid');
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -108,12 +108,12 @@ $(function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      url: '/answerquestionlike',
+      url: '/tweetlike',
       //routeの記述
       type: 'POST',
       //受け取り方法の記述（GETもある）
       data: {
-        'answer_question_id': likeAnswerQuestionId //コントローラーに渡すパラメーター
+        'tweet_id': likeTweetId //コントローラーに渡すパラメーター
 
       }
     }) // Ajaxリクエストが成功した場合
@@ -137,14 +137,14 @@ $(function () {
 
 /***/ }),
 
-/***/ 3:
-/*!***************************************************!*\
-  !*** multi ./resources/js/_answerquestionlike.js ***!
-  \***************************************************/
+/***/ 4:
+/*!******************************************!*\
+  !*** multi ./resources/js/_tweetlike.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Ryosuke Mori\Desktop\laravelapp\resources\js\_answerquestionlike.js */"./resources/js/_answerquestionlike.js");
+module.exports = __webpack_require__(/*! C:\Users\Ryosuke Mori\Desktop\laravelapp\resources\js\_tweetlike.js */"./resources/js/_tweetlike.js");
 
 
 /***/ })

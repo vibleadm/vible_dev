@@ -38,19 +38,21 @@ Route::post('/questionlike', 'QuestionController@ajaxlike');
 //こいつがあると名前からmypage飛ぶのが妨害される。。
 //Route::post('test/{id}', 'PostsController@index');
 
-Route::get('/test/mypage/tweet/{id}', 'PostsController@tw_show');
+
 
 
 Route::get('test/mypage', 'TweetController@mypage')->middleware('auth');
-
+Route::get('/test/mypage/tweet/{id}', 'TweetController@detail');
+Route::post('/tweetlike', 'TweetController@tweetlike');
+Route::post('/answertweetlike', 'TweetController@answer_tweet_like');
 
 //名前のリンクから飛んでくるとき用
-Route::post('test/mypage', 'PostsController@gotomypage')->middleware('auth');
-Route::post('test/mypage/tweet', 'PostsController@tw_create')->middleware('auth');
+//Route::post('test/mypage', 'PostsController@gotomypage')->middleware('auth');
 
 
-//Route::post('/test/nayami/{id}', 'PostsController@nayami_answer')->middleware('auth');
-Route::post('/test/mypage/tweet/{id}', 'PostsController@tw_comment')->middleware('auth');
+Route::post('test/mypage/tweet', 'TweetController@tweet_add')->middleware('auth');
+
+Route::post('/test/mypage/tweet/{id}', 'TweetController@tw_comment')->middleware('auth');
 
 
 
@@ -86,15 +88,7 @@ Route::post('/nayami/{id}', 'QuestionController@nayami_answer');
 Route::post('answerquestionlike', 'QuestionController@answer_question_like');
 
 
-/*
-Route::get('/question', 'QuestionController@index');
-Route::get('ajax',function() {
-    return view('message');
- });
- Route::post('laravel/ajax',function() {
-    return view('test/nayami');
- });
- */
+
 
 
 Route::get('/', 'PostsController@index')->name('posts.index');

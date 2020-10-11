@@ -3,11 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Tweet;
 
-class TweetLike extends Model
+class AnswerTweetLike extends Model
 {
-    protected $fillable = ['user_id', 'tweet_id'];
+    protected $fillable = ['user_id', 'answer_tweet_id'];
     //Like.phpに下記を追記
      //いいねしているユーザー
      public function user()
@@ -18,6 +17,6 @@ class TweetLike extends Model
      //いいねしている投稿
     public function post()
     {
-        return $this->belongsTo(Tweet::class);
+        return $this->belongsTo(AnswerTweet::class);
     }
 }
