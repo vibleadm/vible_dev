@@ -30,6 +30,7 @@
     </form><br>
 
     <h3>コメント一覧(クリックでその人のマイページ飛ぶ)</h3>
+    <p>{{$answer_tweets}}</p>
     <h2>
     <table>
 
@@ -39,21 +40,24 @@
         @csrf
         @foreach($answer_tweets as $answer_tweet)
         <tr>
-            <td><input type="submit" name="id" value="{{$answer_tweet->user_id}}"></td>
-            <td><a href="/test/mypage" onclick="javascript:document.otameshi.submit();return false;">{{$answer_tweet->user_id}}</a></td>
+            <td><input type="submit" name="id" value="{{$users->find($answer_tweet->id)->user->name}}"></td>
             <td>{{$answer_tweet->content}}</td>
             <td>
                 @if($likes->where('user_id',Auth::user()->id)->where('answer_tweet_id',$answer_tweet->id)->first())
                 <p>うんこif</p>
                 <p class="favorite-marke">
-                    <a class="js-like-toggle loved" href="" data-answertweetid="{{$answer_tweet->id}}"><i class="fas fa-heart"></i></a>
+                    <a class="js-like-toggle loved" href="" data-answertweetid="{{$answer_tweet->id}}">
+                        <i class="fas fa-heart"></i>
+                    </a>
                     <span class="likesCount">{{$answer_tweet->answer_tweet_likes_count}}</span>
                 </p>
 
                 @else
                 <p>うんこelse</p>
                 <p class="favorite-marke">
-                    <a class="js-like-toggle" href="" data-answertweetid="{{ $answer_tweet->id }}"><i class="far fa-heart"></i></a>
+                    <a class="js-like-toggle" href="" data-answertweetid="{{ $answer_tweet->id }}">
+                        <i class="far fa-heart"></i>
+                    </a>
                     <span class="likesCount">{{$answer_tweet->answer_tweet_likes_count}}</span>
                 </p>
                 @endif

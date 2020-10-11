@@ -37,17 +37,21 @@
         <td>{{$question->user_id}}</td>
         <td><input type="submit" name="id" value="{{$users->find($question->id)->user->name}}"></td>
         <td>
-            @if($likes->where('user_id',Auth::user()->id)->where('question_id',$question->id))
+            @if($likes->where('user_id',Auth::user()->id)->where('question_id',$question->id)->first())
             <p>うんこif</p>
             <p class="favorite-marke">
-              <a class="js-like-toggle loved" href="" data-questionid="{{$question->id}}"><i class="fas fa-heart"></i></a>
+              <a class="js-like-toggle loved" href="" data-questionid="{{$question->id}}">
+                <i class="fas fa-heart"></i>
+              </a>
               <span class="likesCount">{{$question->question_likes_count}}</span>
             </p>
 
             @else
             <p>うんこelse</p>
             <p class="favorite-marke">
-              <a class="js-like-toggle" href="" data-questionid="{{ $question->id }}"><i class="active far fa-heart"></i></a>
+              <a class="js-like-toggle" href="" data-questionid="{{ $question->id }}">
+                <i class="active far fa-heart"></i>
+              </a>
               <span class="likesCount">{{$question->question_likes_count}}</span>
             </p>  
             @endif

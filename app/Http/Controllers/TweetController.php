@@ -39,13 +39,16 @@ class TweetController extends Controller
     public function detail($id) {
         $tweet = DB::table('tweets')->where('id',$id)->first();
         //$answer_tweets = DB::table('answer_tweets')->where('tweet_id',$id)->get();
-        $answer_tweets = AnswerTweet::withCount('answer_tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$id)->paginate(10);
+        $answer_tweets = AnswerTweet::withCount('answer_tweet_likes')->orderBy('created_at', 'desc')->where('tweet_id',$id)->paginate(10);
         $likes = AnswerTweetLike::all();
+
+        $users = AnswerTweet::with('user:id,name')->get();
 
         return view('test.tw_detail')->with([
             "tweet" => $tweet,
             "answer_tweets" => $answer_tweets,
             "likes" => $likes,
+            "users" => $users,
         ]);
     }
 

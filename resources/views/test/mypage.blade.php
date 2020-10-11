@@ -66,22 +66,27 @@
 	@foreach($tweets as $tweet)
 		<tr>
 		<td><a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a></td>
+		<td>{{$tweet->id}}</td>
 		<td>
-		@if($likes->where('user_id',Auth::user()->id)->where('tweet_id',$tweet->id)->first())
-		<p>うんこif</p>
-		<p class="favorite-marke">
-			<a class="js-like-toggle loved" href="" data-tweetid="{{$tweet->id}}"><i class="fas fa-heart"></i></a>
-			<span class="likesCount">{{$tweet->tweet_likes_count}}</span>
-		</p>
+			@if($likes->where('user_id',Auth::user()->id)->where('tweet_id',$tweet->id)->first())
+			<p>うんこif</p>
+			<p class="favorite-marke">
+				<a class="js-like-toggle loved" href="" data-tweetid="{{$tweet->id}}">
+					<i class="fas fa-heart"></i>
+				</a>
+				<span class="likesCount">{{$tweet->tweet_likes_count}}</span>
+			</p>
 
-		@else
-		<p>うんこelse</p>
-		<p class="favorite-marke">
-			<a class="js-like-toggle" href="" data-tweetid="{{ $tweet->id }}"><i class="active far fa-heart"></i></a>
-			<span class="likesCount">{{$tweet->question_likes_count}}</span>
-		</p>
+			@else
+			<p>うんこelse</p>
+			<p class="favorite-marke">
+				<a class="js-like-toggle" href="" data-tweetid="{{ $tweet->id }}">
+					<i class="active far fa-heart"></i>
+				</a>
+				<span class="likesCount">{{$tweet->question_likes_count}}</span>
+			</p>
 
-		@endif
+			@endif
 		</td>
 		</tr>
 	@endforeach

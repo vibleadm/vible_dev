@@ -41,14 +41,18 @@
             @if($likes->where('user_id',Auth::user()->id)->where('answer_question_id',$answer_question->id)->first())
             <p>うんこif</p>
             <p class="favorite-marke">
-                <a class="js-like-toggle loved" href="" data-answerquestionid="{{$answer_question->id}}"><i class="fas fa-heart"></i></a>
+                <a class="js-like-toggle loved" href="" data-answerquestionid="{{$answer_question->id}}">
+                    <i class="fas fa-heart"></i>
+                </a>
                 <span class="likesCount">{{$answer_question->answer_question_likes_count}}</span>
             </p>
 
             @else
             <p>うんこelse</p>
             <p class="favorite-marke">
-                <a class="js-like-toggle" href="" data-answerquestionid="{{ $answer_question->id }}"><i class="far fa-heart"></i></a>
+                <a class="js-like-toggle" href="" data-answerquestionid="{{ $answer_question->id }}">
+                    <i class="far fa-heart"></i>
+                </a>
                 <span class="likesCount">{{$answer_question->answer_question_likes_count}}</span>
             </p>
             @endif

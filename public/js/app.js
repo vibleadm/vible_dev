@@ -49793,7 +49793,9 @@ $(function () {
     .done(function (data) {
       //lovedクラスを追加
       $this.toggleClass('loved');
-      console.log('success!!!!!!!!!!'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+      $this.children('i').toggleClass('fas');
+      $this.children('i').toggleClass('far');
+      console.log('sucesssss'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
 
       $this.next('.likesCount').html(data);
     }) // Ajaxリクエストが失敗した場合
@@ -49844,7 +49846,9 @@ $(function () {
     .done(function (data) {
       //lovedクラスを追加
       $this.toggleClass('loved');
-      console.log('success!!!!!!!!!!'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+      $this.children('i').toggleClass('fas');
+      $this.children('i').toggleClass('far');
+      console.log('sucesssss'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
 
       $this.next('.likesCount').html(data);
     }) // Ajaxリクエストが失敗した場合
@@ -49895,7 +49899,9 @@ $(function () {
     .done(function (data) {
       //lovedクラスを追加
       $this.toggleClass('loved');
-      console.log('success!!!!!!!!!!'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+      $this.children('i').toggleClass('fas');
+      $this.children('i').toggleClass('far');
+      console.log('sucesssss'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
 
       $this.next('.likesCount').html(data);
     }) // Ajaxリクエストが失敗した場合
@@ -49946,7 +49952,9 @@ $(function () {
     .done(function (data) {
       //lovedクラスを追加
       $this.toggleClass('loved');
-      console.log('success!!!!!!!!!!'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+      $this.children('i').toggleClass('fas');
+      $this.children('i').toggleClass('far');
+      console.log('sucesssss'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
 
       $this.next('.likesCount').html(data);
     }) // Ajaxリクエストが失敗した場合
