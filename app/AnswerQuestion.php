@@ -16,4 +16,5 @@ class AnswerQuestion extends Model
     {
         return $this->hasMany(AnswerQuestionLike::class);
     }
+
 }

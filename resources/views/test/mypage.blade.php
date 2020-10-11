@@ -10,15 +10,12 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
-<!--
+
 @if(isset($access)) 
 <h1>{{$access}}さんのマイページうんこ</h1>
 @else
 <h1>{{$myname}}さんのマイページ</h1>
 @endif
--->
-
-<h1>{{$myname}}さんのマイページ</h1>
 
 @section('content')
 
@@ -35,22 +32,25 @@
 <div class="tab-pane active">
 	<body class="bg-light">
 	
-	
-	<form action="/test/mypage/tweet" method="post">
-	@csrf
-	<div class="container-fluid">
-		<div class="col-xl-5 mb-2 mb-xl-0">
-			<div class="mb-1 small text-danger"><span class="badge badge-danger ml-2"></span></div>
-			<div><input type="text" name="content" class="form-control" required placeholder="つぶやいてください"></div>
-			
-		</div>
-	<div class="col-xl row">
-		<div class="col-sm-auto col-lg col-xl align-self-center">
-			<input type="submit" value="ツイート" class="btn btn-info mb-1">
-			<input type="reset" value="クリア" class="btn btn-warning mb-1">
-		</div>
-	</div>
-	</form>
+	@if($myname == $access)
+		<form action="/test/mypage/tweet" method="post">
+			@csrf
+			<div class="container-fluid">
+				<div class="col-xl-5 mb-2 mb-xl-0">
+					<div class="mb-1 small text-danger"><span class="badge badge-danger ml-2"></span></div>
+					<div><input type="text" name="content" class="form-control" required placeholder="つぶやいてください"></div>
+					
+				</div>
+			<div class="col-xl row">
+				<div class="col-sm-auto col-lg col-xl align-self-center">
+					<input type="submit" value="ツイート" class="btn btn-info mb-1">
+					<input type="reset" value="クリア" class="btn btn-warning mb-1">
+				</div>
+			</div>
+		</form>
+	@else
+		<p>私は40歳以上、70歳未満です</p>
+	@endif
 	
 
 

@@ -27,54 +27,35 @@
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
 
-
 <h3>
-<table>
-@foreach($questions as $question)
-  <tr>
-  <td><a href="{{ action('QuestionController@detail', $question->id) }}">{{$question->title}}</a></td>
-  <td>{{$question->title}}</td>
-  <td>{{$question->content}}</td>
-  <td>
-      @if($likes->where('user_id',Auth::user()->id)->where('question_id',$question->id))
-      <p>うんこif</p>
-      <p class="favorite-marke">
-        <a class="js-like-toggle loved" href="" data-questionid="{{$question->id}}"><i class="fas fa-heart"></i></a>
-        <span class="likesCount">{{$question->question_likes_count}}</span>
-      </p>
-      <!--
-      <button class="{{$question->qid}}">
-      <i class="fas fa-heart"></i>
-      <span class="likesCount">
-      いいね {{ $question->likes_count }}
-      </span>
-      </button>
-      -->
+  <table>
+    <form action="/test/mypage" method="post">
+      @csrf
+      @foreach($questions as $question)
+        <tr>
+        <td><a href="{{ action('QuestionController@detail', $question->id) }}">{{$question->title}}</a></td>
+        <td>{{$question->user_id}}</td>
+        <td><input type="submit" name="id" value="{{$users->find($question->id)->user->name}}"></td>
+        <td>
+            @if($likes->where('user_id',Auth::user()->id)->where('question_id',$question->id))
+            <p>うんこif</p>
+            <p class="favorite-marke">
+              <a class="js-like-toggle loved" href="" data-questionid="{{$question->id}}"><i class="fas fa-heart"></i></a>
+              <span class="likesCount">{{$question->question_likes_count}}</span>
+            </p>
 
-
-
-
-
-
-      @else
-      <p>うんこelse</p>
-      <p class="favorite-marke">
-        <a class="js-like-toggle" href="" data-questionid="{{ $question->id }}"><i class="active far fa-heart"></i></a>
-        <span class="likesCount">{{$question->question_likes_count}}</span>
-      </p>
-      <!--
-      <button class="{{$question->qid}}">
-      <i class="far fa-heart"></i>
-      <span class="likesCount">
-      いいね {{ $question->likes_count }}
-      </span>
-      </button>
-      -->    
-      @endif
-  </td>
-  </tr>
-@endforeach
-</table>
+            @else
+            <p>うんこelse</p>
+            <p class="favorite-marke">
+              <a class="js-like-toggle" href="" data-questionid="{{ $question->id }}"><i class="active far fa-heart"></i></a>
+              <span class="likesCount">{{$question->question_likes_count}}</span>
+            </p>  
+            @endif
+        </td>
+        </tr>
+      @endforeach
+    </form>
+  </table>
 </h3>
 
 <script src="{{ mix('js/_questionlike.js') }}"></script>

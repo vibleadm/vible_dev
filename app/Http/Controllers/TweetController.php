@@ -29,7 +29,7 @@ class TweetController extends Controller
             "users"=>$users,
             "tweets" => $tweets,
             'myname' => $myname,
-            'access' => $id,
+            'access' => null,
             'likes' => $likes,
         ]);
 
@@ -133,9 +133,25 @@ class TweetController extends Controller
 
         $answertweetLikesCount = $answer_tweet->loadCount('answer_tweet_likes')->answer_tweet_likes_count;
         //これがajaxのdataとして渡される
-        print($answertweetLikesCount);  
-        
-        
+        print($answertweetLikesCount);    
+    }
+
+
+    public function gotomypage(Request $request)
+    {
+        $id = Auth::id();
+        $users = DB::table('users')->where('id',$id)->first();
+        $myname = $users->name;
+        $tweets = Tweet::withCount('tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$id)->paginate(10);
+        $likes = TweetLike::all();
+
+        return view('test.mypage')->with([
+            "users"=>$users,
+            "tweets" => $tweets,
+            'myname' => $myname,
+            'likes' => $likes,
+            'access' => $request->id,
+        ]);
     }
 }
 

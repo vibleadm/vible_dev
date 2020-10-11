@@ -25,7 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', 'HomeController@index');
+
 
 //↓ajax用おためし
 Route::post('/sample2', 'PostsController@sample2');
@@ -47,7 +47,7 @@ Route::post('/tweetlike', 'TweetController@tweetlike');
 Route::post('/answertweetlike', 'TweetController@answer_tweet_like');
 
 //名前のリンクから飛んでくるとき用
-//Route::post('test/mypage', 'PostsController@gotomypage')->middleware('auth');
+Route::post('test/mypage', 'TweetController@gotomypage')->middleware('auth');
 
 
 Route::post('test/mypage/tweet', 'TweetController@tweet_add')->middleware('auth');
@@ -75,12 +75,13 @@ Route::auth();
 
 
 
-
+/*
 Route::post('/posts/{post}/likes', 'LikesController@store');
 Route::post('/posts/{post}/likes/{like}', 'LikesController@destroy');
 
 Route::post('/tweets/{tweet}/likes', 'TweetLikesController@store');
 Route::post('/tweets/{tweet}/likes/{like}', 'TweetLikesController@destroy');
+*/
 
 Route::get('/nayami/{id}', 'QuestionController@detail');
 //Route::post('/posts/{id}', 'PostsController@show2');
@@ -90,12 +91,13 @@ Route::post('answerquestionlike', 'QuestionController@answer_question_like');
 
 
 
-
+/*
 Route::get('/', 'PostsController@index')->name('posts.index');
 
 //ログイン中のユーザーのみアクセス可能
 //「ajaxlike.jsファイルのurl:'ルーティング'」に書くものと合わせる。
 Route::post('/ajaxlike', 'PostsController@ajaxlike');
+*/
 
 
 

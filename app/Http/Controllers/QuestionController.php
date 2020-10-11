@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Question;
 use App\QuestionLike;
+use App\User;
 use App\AnswerQuestion;
 use App\AnswerQuestionLike;
 use Illuminate\Http\Request;
@@ -20,11 +21,13 @@ class QuestionController extends Controller
         //いいね数まで含めた変数　question_likes_count
         $questions = Question::withCount('question_likes')->orderBy('created_at', 'desc')->paginate(10);
         
-        $id = Auth::id();
+        //こいつがやりたいことだった。。。
+        $users = Question::with('user:id,name')->get();
         
         $data = [
             'questions' => $questions,
             'likes'=>$likes,
+            'users' => $users,
         ];
 
         
@@ -77,13 +80,15 @@ class QuestionController extends Controller
 
     public function detail($id) {
         $posts = DB::table('questions')->get();
-        //$post = DB::table('posts')->get();
         $answer_questions = AnswerQuestion::withCount('answer_question_likes')->orderBy('created_at', 'desc')->where('question_id',$id)->paginate(10);
         $answers = DB::table('answer_questions')->where('question_id',$id)->get();
-        //$post = Post::findorFail($id); 
-        $post = Question::findorFail($id); 
+        
+        //名前表示用
+        $users = AnswerQuestion::with('user:id,name')->get();
+        
+        $question = Question::findorFail($id); 
         $likes = AnswerQuestionLike::all();
-        return view('test.nayami_detail')->with(array('answer_questions'=>$answer_questions,'answers'=>$answers,'post' => $post, 'likes'=>$likes));
+        return view('test.nayami_detail')->with(array('answer_questions'=>$answer_questions,'answers'=>$answers,'question' => $question, 'likes'=>$likes, 'users'=>$users));
     }
 
     public function nayami_answer(Request $request)
