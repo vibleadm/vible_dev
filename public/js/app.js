@@ -49708,6 +49708,269 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/_ajaxlike.js":
+/*!***********************************!*\
+  !*** ./resources/js/_ajaxlike.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var like = $('.js-like-toggle');
+  var likePostId;
+  like.on('click', function () {
+    var $this = $(this);
+    likePostId = $this.data('postid');
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/ajaxlike',
+      //routeの記述
+      type: 'POST',
+      //受け取り方法の記述（GETもある）
+      data: {
+        'post_id': likePostId //コントローラーに渡すパラメーター
+
+      }
+    }) // Ajaxリクエストが成功した場合
+    .done(function (data) {
+      //lovedクラスを追加
+      $this.toggleClass('loved');
+      console.log('success!!!!!!!!!!'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+
+      $this.next('.likesCount').html(data);
+    }) // Ajaxリクエストが失敗した場合
+    .fail(function (data, xhr, err) {
+      //ここの処理はエラーが出た時にエラー内容をわかるようにしておく。
+      //とりあえず下記のように記述しておけばエラー内容が詳しくわかります。笑
+      console.log('エラー');
+      console.log(err);
+      console.log(xhr);
+    });
+    return false;
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/_answerquestionlike.js":
+/*!*********************************************!*\
+  !*** ./resources/js/_answerquestionlike.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var like = $('.js-like-toggle');
+  var likeAnswerQuestionId;
+  like.on('click', function () {
+    var $this = $(this);
+    likeAnswerQuestionId = $this.data('answerquestionid');
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/answerquestionlike',
+      //routeの記述
+      type: 'POST',
+      //受け取り方法の記述（GETもある）
+      data: {
+        'answer_question_id': likeAnswerQuestionId //コントローラーに渡すパラメーター
+
+      }
+    }) // Ajaxリクエストが成功した場合
+    .done(function (data) {
+      //lovedクラスを追加
+      $this.toggleClass('loved');
+      $this.children('i').toggleClass('fas');
+      $this.children('i').toggleClass('far');
+      console.log('sucesssss'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+
+      $this.next('.likesCount').html(data);
+    }) // Ajaxリクエストが失敗した場合
+    .fail(function (data, xhr, err) {
+      //ここの処理はエラーが出た時にエラー内容をわかるようにしておく。
+      //とりあえず下記のように記述しておけばエラー内容が詳しくわかります。笑
+      console.log('エラー');
+      console.log(err);
+      console.log(xhr);
+    });
+    return false;
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/_answertweetlike.js":
+/*!******************************************!*\
+  !*** ./resources/js/_answertweetlike.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var like = $('.js-like-toggle');
+  var likeAnswerTweetId;
+  like.on('click', function () {
+    var $this = $(this);
+    likeAnswerTweetId = $this.data('answertweetid');
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/answertweetlike',
+      //routeの記述
+      type: 'POST',
+      //受け取り方法の記述（GETもある）
+      data: {
+        'answer_tweet_id': likeAnswerTweetId //コントローラーに渡すパラメーター
+
+      }
+    }) // Ajaxリクエストが成功した場合
+    .done(function (data) {
+      //lovedクラスを追加
+      $this.toggleClass('loved');
+      $this.children('i').toggleClass('fas');
+      $this.children('i').toggleClass('far');
+      console.log('sucesssss'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+
+      $this.next('.likesCount').html(data);
+    }) // Ajaxリクエストが失敗した場合
+    .fail(function (data, xhr, err) {
+      //ここの処理はエラーが出た時にエラー内容をわかるようにしておく。
+      //とりあえず下記のように記述しておけばエラー内容が詳しくわかります。笑
+      console.log('エラー');
+      console.log(err);
+      console.log(xhr);
+    });
+    return false;
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/_questionlike.js":
+/*!***************************************!*\
+  !*** ./resources/js/_questionlike.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var like = $('.js-like-toggle');
+  var likeQuestionId;
+  like.on('click', function () {
+    var $this = $(this);
+    likeQuestionId = $this.data('questionid');
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/questionlike',
+      //routeの記述
+      type: 'POST',
+      //受け取り方法の記述（GETもある）
+      data: {
+        'question_id': likeQuestionId //コントローラーに渡すパラメーター
+
+      }
+    }) // Ajaxリクエストが成功した場合
+    .done(function (data) {
+      //lovedクラスを追加
+      $this.toggleClass('loved');
+      $this.children('i').toggleClass('fas');
+      $this.children('i').toggleClass('far');
+      console.log('sucesssss'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+
+      $this.next('.likesCount').html(data);
+    }) // Ajaxリクエストが失敗した場合
+    .fail(function (data, xhr, err) {
+      //ここの処理はエラーが出た時にエラー内容をわかるようにしておく。
+      //とりあえず下記のように記述しておけばエラー内容が詳しくわかります。笑
+      console.log('エラー');
+      console.log(err);
+      console.log(xhr);
+    });
+    return false;
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/_tweetlike.js":
+/*!************************************!*\
+  !*** ./resources/js/_tweetlike.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  var like = $('.js-like-toggle');
+  var likeTweetId;
+  like.on('click', function () {
+    var $this = $(this);
+    likeTweetId = $this.data('tweetid');
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/tweetlike',
+      //routeの記述
+      type: 'POST',
+      //受け取り方法の記述（GETもある）
+      data: {
+        'tweet_id': likeTweetId //コントローラーに渡すパラメーター
+
+      }
+    }) // Ajaxリクエストが成功した場合
+    .done(function (data) {
+      //lovedクラスを追加
+      $this.toggleClass('loved');
+      $this.children('i').toggleClass('fas');
+      $this.children('i').toggleClass('far');
+      console.log('sucesssss'); //.likesCountの次の要素のhtmlを「data.postLikesCount」の値に書き換える
+
+      $this.next('.likesCount').html(data);
+    }) // Ajaxリクエストが失敗した場合
+    .fail(function (data, xhr, err) {
+      //ここの処理はエラーが出た時にエラー内容をわかるようにしておく。
+      //とりあえず下記のように記述しておけばエラー内容が詳しくわかります。笑
+      console.log('エラー');
+      console.log(err);
+      console.log(xhr);
+    });
+    return false;
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -49715,13 +49978,24 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/**
+/* WEBPACK VAR INJECTION */(function(global) {/**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./_ajaxlike.js */ "./resources/js/_ajaxlike.js");
+
+__webpack_require__(/*! ./_questionlike.js */ "./resources/js/_questionlike.js");
+
+__webpack_require__(/*! ./_answerquestionlike.js */ "./resources/js/_answerquestionlike.js");
+
+__webpack_require__(/*! ./_tweetlike.js */ "./resources/js/_tweetlike.js");
+
+__webpack_require__(/*! ./_answertweetlike.js */ "./resources/js/_answertweetlike.js");
+
+global.$ = global.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -49743,6 +50017,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 

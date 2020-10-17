@@ -3,35 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use kanazaca\CounterCache\CounterCache;
-use App\Question;
+
 
 class Like extends Model
 {
-    use CounterCache;
-
-    public $counterCacheOptions = [
-        'Post' => [
-            'field' => 'likes_count',
-            //'foreignKey' => 'post_id'
-            'foreignKey' => 'qid'
-        ]
-    ];
-
-    //protected $fillable = ['user_id', 'post_id'];
-    protected $fillable = ['user_id', 'qid'];
-    
-    public function Post()
+    protected $fillable = ['user_id', 'post_id'];
+    //Like.phpに下記を追記
+     //いいねしているユーザー
+     public function user()
     {
-      //ここの第二引数加えた！！
-      //return $this->belongsTo('App\Post');
-      return $this->belongsTo('App\Question','qid');
+        return $this->belongsTo(User::class);
     }
-    
-    public function User()
-    {
-      return $this->belongsTo(User::class);
-    }
-    
 
+     //いいねしている投稿
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
 }

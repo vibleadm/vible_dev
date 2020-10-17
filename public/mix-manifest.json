@@ -1,4 +1,9 @@
 {
+    "/js/_ajaxlike.js": "/js/_ajaxlike.js",
+    "/js/_answerquestionlike.js": "/js/_answerquestionlike.js",
+    "/js/_answertweetlike.js": "/js/_answertweetlike.js",
+    "/js/_questionlike.js": "/js/_questionlike.js",
+    "/js/_tweetlike.js": "/js/_tweetlike.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css"
 }
