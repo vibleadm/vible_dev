@@ -1,4 +1,6 @@
+
 <html>
+@extends('layouts.layout')
 <head>
 <style>
     body {font-size:16pt; color:#999;}
@@ -10,6 +12,9 @@
 </style>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
+
+
+@section('content')
 <body>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
@@ -65,4 +70,7 @@
 
 <script src="{{ mix('js/_answerquestionlike.js') }}"></script>
 </body>
+
+@endsection
+
 </html>

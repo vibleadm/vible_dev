@@ -1,4 +1,6 @@
 <html>
+@extends('layouts.layout')
+@section('content')
 <h1>悩みを投稿してください</h1>
 <body>
     <form action="/test/add" method="post">
@@ -10,4 +12,5 @@
     </table>
     </form>
 </body>
+@endsection
 </html>

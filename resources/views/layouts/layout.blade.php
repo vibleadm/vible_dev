@@ -13,7 +13,6 @@
 <header>
     <p><a href="/test">VIBLE</a></p>
 	<ul class="nav nav-tabs">
-    <li class="nav-item"><a href="/">TOP</a></li>
 
         @auth
         <!--
