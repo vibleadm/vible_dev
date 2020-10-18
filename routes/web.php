@@ -23,7 +23,7 @@ use Illuminate\Auth\Middleware\Authenticate;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 
 
@@ -31,7 +31,7 @@ Route::get('/', function () {
 Route::post('/sample2', 'PostsController@sample2');
 //↑ここまで
 
-Route::get('test', 'QuestionController@index');
+Route::get('test', 'QuestionController@index')->name('toppage');
 Route::post('/questionlike', 'QuestionController@ajaxlike');
 
 
