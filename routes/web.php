@@ -83,7 +83,7 @@ Route::post('/tweets/{tweet}/likes', 'TweetLikesController@store');
 Route::post('/tweets/{tweet}/likes/{like}', 'TweetLikesController@destroy');
 */
 
-Route::get('/nayami/{id}', 'QuestionController@detail');
+Route::get('/nayami/{id}', 'QuestionController@detail')->middleware('auth');
 //Route::post('/posts/{id}', 'PostsController@show2');
 Route::post('/nayami/{id}', 'QuestionController@nayami_answer');
 Route::post('answerquestionlike', 'QuestionController@answer_question_like');
