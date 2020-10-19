@@ -21,7 +21,7 @@ class TweetController extends Controller
         //$posts = DB::table('tweets')->where('userID',$user)->get();
         //$tweets = Tweet::where('user_id',$id)->get();
         $likes = TweetLike::all();
-        $tweets = Tweet::withCount('tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$id)->paginate(10);
+        $tweets = Tweet::withCount('tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$id)->paginate(100);
 
 
 
@@ -29,7 +29,7 @@ class TweetController extends Controller
             "users"=>$users,
             "tweets" => $tweets,
             'myname' => $myname,
-            'access' => null,
+            'access' => $myname,
             'likes' => $likes,
         ]);
 
@@ -55,7 +55,7 @@ class TweetController extends Controller
     public function tweet_add(Request $request)
     {
         $id = Auth::id();
-        $items = DB::table('users')->where('id',$id)->first();
+        $users = DB::table('users')->where('id',$id)->first();
         
         $param = [
             'user_id' => $id,
@@ -63,7 +63,20 @@ class TweetController extends Controller
         ];
         //DB::insert('insert into tweet (userID,main) values (:userID,:main)', $param);
         DB::table('tweets') ->insert($param);
-        return redirect('/test/mypage');
+        //return back();
+        //return redirect()->route('gotomypage', ['access' => $users->name]);
+        
+        $myname = $users->name;
+        $tweets = Tweet::withCount('tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$id)->paginate(100);
+        $likes = TweetLike::all();
+        return view('test.mypage')->with([
+            "users"=>$users,
+            "tweets" => $tweets,
+            'myname' => $myname,
+            'likes' => $likes,
+            'access' => $users->name,
+        ]);
+        
     }
 
 
@@ -144,8 +157,9 @@ class TweetController extends Controller
     {
         $id = Auth::id();
         $users = DB::table('users')->where('id',$id)->first();
+        $tweet_user = DB::table('users')->where('name',$request->id)->first();
         $myname = $users->name;
-        $tweets = Tweet::withCount('tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$id)->paginate(10);
+        $tweets = Tweet::withCount('tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$tweet_user->id)->paginate(100);
         $likes = TweetLike::all();
 
         return view('test.mypage')->with([

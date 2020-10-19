@@ -11,20 +11,15 @@
 @endguest
 
 <header>
-    <p><a href="/test">VIBLE</a></p>
-	<ul class="nav nav-tabs">
+  <p><a href="/test">VIBLE</a></p>
+  @auth
+    <p class="nav-item"><a href="/test/mypage">MYPAGE</a></p>
+    <p class="nav-item"><a href="/logout">LOGOUT</a></p>
+  @endauth
 
-        @auth
-        <!--
-        <li class="nav-item"><a href="/test/mypage">MYPAGE</a></li>
-        -->
-        <li class="nav-item"><a href="/logout">LOGOUT</a></li>
-        @endauth
-
-        @guest
-        <li class="nav-item"><a href="/login">LOGIN</a></li>
-        @endguest
-	</ul>
+  @guest
+    <p class="nav-item"><a href="/login">LOGIN</a></p>
+  @endguest
 </header>
 
 

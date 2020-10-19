@@ -22,7 +22,14 @@
 <h2>投稿された悩み一覧(クリックで詳細とぶ)</h2>
 <br>
 <body>
-<p><a href="/test/add" >ログインして悩みを投稿しよう</a></p>
+
+@auth
+  <p><a href="/test/add" >悩みを投稿しよう</a></p>
+@endauth
+
+@guest
+  <p><a href="/test/add" >ログインして悩みを投稿しよう</a></p>
+@endguest
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
