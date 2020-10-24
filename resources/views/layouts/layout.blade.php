@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html lang="ja">
-  <head>
-    <!-- cssをインポート -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
-    <link rel=”stylesheet” href=”https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css”>
-    <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
-  </head>
+
+<head>
+  <!-- cssをインポート -->
+  <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
+  <link rel=”stylesheet” href=”https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css”> <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
+</head>
 
 
 <header>
@@ -16,12 +16,12 @@
     </button>
 
     <div class="collapse navbar-collapse" id="Navber">
-      
+
 
 
       <ul class="navbar-nav ml-auto mr-5">
         <li class="nav-item ml-2">
-          <a class="nav-link text-white" id="post-link" href="/test/add">投稿する</a>
+          <a class="nav-link text-white" id="post-link" href="/test/add">悩みを投稿する</a>
         </li>
         <li class="nav-item dropdown">
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -35,25 +35,25 @@
             <div class="dropdown-divider"></div>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
+              @csrf
             </form>
           </div>
         </li>
         @auth
-          <li class="nav-item ml-2">
-            <a class="nav-link text-white" href="/test/mypage">マイページ</a>
-          </li>
-          <li class="nav-item ml-2">
-            <a class="nav-link text-white" href="/logout">ログアウト</a>
-          </li>
+        <li class="nav-item ml-2">
+          <a class="nav-link text-white" href="/test/mypage">マイページ</a>
+        </li>
+        <li class="nav-item ml-2">
+          <a class="nav-link text-white" href="/logout">ログアウト</a>
+        </li>
         @endauth
         @guest
-          <li class="nav-item ml-2">
-            <a class="nav-link text-white" id="register" href="/register">ユーザ登録</a>
-          </li>
-          <li class="nav-item ml-2">
-            <a class="nav-link text-white" href="/login">ログイン</a>
-          </li>
+        <li class="nav-item ml-2">
+          <a class="nav-link text-white" id="register" href="/register">ユーザ登録</a>
+        </li>
+        <li class="nav-item ml-2">
+          <a class="nav-link text-white" href="/login">ログイン</a>
+        </li>
         @endguest
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -65,7 +65,7 @@
 
 <body>
 
-    @yield('content')
+  @yield('content')
 
 </body>
 
