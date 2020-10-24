@@ -43,44 +43,45 @@
 
 	@foreach($tweets as $tweet)
 	<div class="tw-block-parent">
-	<div class="timeline-TweetList-tweet">
-		<div class="timeline-Tweet">
-		<div class="timeline-Tweet-brand">
-			<div class="Icon Icon--twitter"></div>
-		</div>
-		<div class="timeline-Tweet-author">
-			<div class="TweetAuthor"><a class="TweetAuthor-link" href="#channel"> </a><span class="TweetAuthor-avatar"> 
-				<div class="Avatar"> </div></span><span class="TweetAuthor-name">{{$myname}}</span><span class="Icon Icon--verified"> </span></div>
-		</div>
-		<div class="timeline-Tweet-text">
-		<a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a>
-		</div>
-		<div class="timeline-Tweet-metadata"><span class="timeline-Tweet-timestamp">9h</span></div>
-			<ul class="timeline-Tweet-actions">
+		<div class="timeline-TweetList-tweet">
+			<div class="timeline-Tweet">
+				<div class="timeline-Tweet-author">
+					<div class="TweetAuthor">
+						<a class="TweetAuthor-link" href="#channel"> </a>
+						<span class="TweetAuthor-avatar"> <div><i class="far fa-user"></i></div></span>
+						<span class="TweetAuthor-name">{{$myname}}</span>
+						<span class="Icon Icon--verified"></span>
+					</div>
+				</div>
+				<div class="timeline-Tweet-text">
+				<a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a>
+			</div>
+			
+			<div class="timeline-Tweet-metadata"><span class="timeline-Tweet-timestamp">9h</span></div>
+				<ul class="timeline-Tweet-actions">
 
-				@if($likes->where('user_id',Auth::user()->id)->where('tweet_id',$tweet->id)->first())
-				<li class="timeline-Tweet-action">
-					<a class="js-like-toggle loved" href="" data-tweetid="{{$tweet->id}}">
-						<i class="fas fa-heart"></i>
-					</a>
-					<span class="likesCount">{{$tweet->tweet_likes_count}}</span>
-				</li>
+					@if($likes->where('user_id',Auth::user()->id)->where('tweet_id',$tweet->id)->first())
+					<li class="timeline-Tweet-action">
+						<a class="js-like-toggle loved" href="" data-tweetid="{{$tweet->id}}">
+							<i class="fas fa-heart"></i>
+						</a>
+						<span class="likesCount">{{$tweet->tweet_likes_count}}</span>
+					</li>
 
-				@else
-				<li class="timeline-Tweet-action">
-					<a class="js-like-toggle" href="" data-tweetid="{{ $tweet->id }}">
-						<i class="active far fa-heart"></i>
-					</a>
-					<span class="likesCount">{{$tweet->question_likes_count}}</span>
-				</li>
-				@endif
+					@else
+					<li class="timeline-Tweet-action">
+						<a class="js-like-toggle" href="" data-tweetid="{{ $tweet->id }}">
+							<i class="active far fa-heart"></i>
+						</a>
+						<span class="likesCount">{{$tweet->question_likes_count}}</span>
+					</li>
+					@endif
 
-			</ul>
+				</ul>
+			</div>
 		</div>
-	</div>
 	</div>
 	@endforeach
-
 
 
 
