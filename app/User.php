@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\QuestionLike;
 
 class User extends Authenticatable
 {
@@ -37,8 +38,71 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+
+    //User.phpに下記を追記
+    // ユーザーの投稿
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    // ユーザーがいいねしている投稿
     public function likes()
     {
-      return $this->hasMany(Like::class);
+        return $this->hasMany(Like::class);
     }
+
+
+
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+    public function questionlikes()
+    {
+        return $this->hasMany(QuestionLike::class);
+    }
+
+
+
+
+
+    public function answerquestions()
+    {
+        return $this->hasMany(AnswerQuestion::class);
+    }
+
+    // ユーザーがいいねしている投稿
+    public function answerquestionlikes()
+    {
+        return $this->hasMany(AnswerQuestionLike::class);
+    }
+
+
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class);
+    }
+    public function tweetlikes()
+    {
+        return $this->hasMany(TweetLike::class);
+    }
+
+
+
+    public function answertweets()
+    {
+        return $this->hasMany(AnswerTweet::class);
+    }
+
+    // ユーザーがいいねしている投稿
+    public function answertweetlikes()
+    {
+        return $this->hasMany(AnswerTweetLike::class);
+    }
+
+
+
 }

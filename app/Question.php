@@ -4,28 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Auth;
-use App\Like;
+use App\QuestionLike;
 
 class Question extends Model
 {
-    public $timestamps = false;
-    protected $primaryKey = 'qid';
-
-
-    public function likes()
+    //Post.phpに下記を追記
+    public function user()
     {
-      //belongsToの第２引数が大事！！
-      //return $this->belongsTo('App\Like','qid','qid');
-      return $this->hasMany('App\Like','qid');
-    }
-    
-    
-    public function like_by()
-    {
-      return Like::where('user_id', Auth::user()->id)->first();
+        return $this->belongsTo(User::class);
     }
 
+    public function question_likes()
+    {
+        return $this->hasMany(QuestionLike::class);
+    }
 
 }
-
-
