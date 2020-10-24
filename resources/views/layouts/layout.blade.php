@@ -4,12 +4,13 @@
     <!-- cssをインポート -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
     <link rel=”stylesheet” href=”https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css”>
+    <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
   </head>
 
 
 <header>
   <nav class="navbar navbar-expand-lg navbar-light pl-5 pr-5 pt-2 pb-2">
-    <a class="navbar-brand text-white" href="/test">VIBLE</a>
+    <a class="navbar-brand text-white" href="/test"><img class="logo" src="{{ asset('image/logo_transparent.png') }}" alt="logo" style="height: 50px;"></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber" aria-expanded="false" aria-label="ナビゲーションの切替">
       <span class="navbar-toggler-icon"></span>
     </button>
