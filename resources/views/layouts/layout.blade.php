@@ -38,9 +38,6 @@
             </form>
           </div>
         </li>
-        <li class="nav-item ml-2">
-          <a class="nav-link text-white" id="register" href="/register">ユーザ登録</a>
-        </li>
         @auth
           <li class="nav-item ml-2">
             <a class="nav-link text-white" href="/test/mypage">マイページ</a>
@@ -50,6 +47,9 @@
           </li>
         @endauth
         @guest
+          <li class="nav-item ml-2">
+            <a class="nav-link text-white" id="register" href="/register">ユーザ登録</a>
+          </li>
           <li class="nav-item ml-2">
             <a class="nav-link text-white" href="/login">ログイン</a>
           </li>

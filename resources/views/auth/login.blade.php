@@ -1,19 +1,12 @@
-@extends('layouts.app')
-@auth
-  <p>ログインユーザーに表示する。</p>
-@endauth
+@extends('layouts.layout')
 
-@guest
-  <p>ログインしていないユーザーに表示する。</p>
-@endguest
 @section('content')
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-<h1><i class="fas fa-heart"></i>ログインページ<i class="fas fa-heart"></i></h1>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">{{ __('Login to VIBLE') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
