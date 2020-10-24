@@ -104,7 +104,8 @@ class QuestionController extends Controller
             'content' => $request->content
         ];
         DB::insert('insert into answer_questions (question_id, user_id, content) values (:question_id,:user_id,:content)', $param);
-        return redirect('/test');
+        //return redirect('/test');
+        return back();
     }
 
     public function answer_question_like(Request $request)

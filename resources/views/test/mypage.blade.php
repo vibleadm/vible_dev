@@ -66,7 +66,6 @@
 	@foreach($tweets as $tweet)
 		<tr>
 		<td><a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a></td>
-		<td>{{$tweet->id}}</td>
 		<td>
 			@if($likes->where('user_id',Auth::user()->id)->where('tweet_id',$tweet->id)->first())
 			<p>うんこif</p>
