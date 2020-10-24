@@ -73,6 +73,9 @@ body {
   color: #212529;
   text-align: left;
   background-color: #f8fafc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -10966,31 +10969,26 @@ nav #Navber .navbar-nav .nav-item #post-link {
   position: relative;
   padding: 10px;
 }
-
 .timeline-Tweet a,
 .timeline-Tweet .link {
   color: #3b94d9;
   text-decoration: none;
   outline: 0;
 }
-
 .timeline-Tweet a:hover,
 .timeline-Tweet .link:hover {
   color: #55acee;
 }
-
 .timeline-Tweet-brand {
   position: absolute;
   top: 10px;
   right: 10px;
 }
-
 .timeline-Tweet-author {
   position: relative;
   margin-bottom: 2px;
   padding-left: 40px;
 }
-
 .timeline-Tweet-text {
   margin-left: 40px;
   margin-bottom: 12px;
@@ -10999,20 +10997,17 @@ nav #Navber .navbar-nav .nav-item #post-link {
   line-height: 24px;
   font-weight: 300;
 }
-
 .timeline-Tweet-metadata {
   position: absolute;
   bottom: 12px;
   right: 10px;
 }
-
 .timeline-Tweet-actions {
   margin: 0 0 0 40px;
   padding: 0;
   list-style: none;
   border: none;
 }
-
 .timeline-Tweet-action {
   display: inline-block;
   font-size: 17px;
@@ -11052,13 +11047,11 @@ nav #Navber .navbar-nav .nav-item #post-link {
   white-space: nowrap;
   word-wrap: normal;
 }
-
 .TweetAuthor-link {
   font-weight: inherit;
   color: inherit;
   text-decoration: inherit;
 }
-
 .TweetAuthor-avatar {
   position: absolute;
   top: 0;
@@ -11068,14 +11061,12 @@ nav #Navber .navbar-nav .nav-item #post-link {
   overflow: hidden;
   border-radius: 4px;
 }
-
 .TweetAuthor-name {
   margin-top: 5px;
   font-size: 14px;
   font-weight: 700;
   line-height: 18px;
 }
-
 .TweetAuthor-screenName {
   margin-left: 5px;
   font-size: 13px;
@@ -11083,7 +11074,6 @@ nav #Navber .navbar-nav .nav-item #post-link {
   font-weight: 300;
   color: #8899A6;
 }
-
 .Icon {
   display: inline-block;
   width: 1em;

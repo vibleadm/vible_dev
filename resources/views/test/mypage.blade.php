@@ -39,8 +39,7 @@
 	@else
 		<p>私は40歳以上、70歳未満です</p>
 	@endif
-
-
+  
 	@foreach($tweets as $tweet)
 	<div class="tw-block-parent">
 	<div class="timeline-TweetList-tweet">
@@ -80,16 +79,6 @@
 	</div>
 	</div>
 	@endforeach
-
-
-
-
-
-	
-
-
-
-	
 	
 	<!--テーブル表示してたときのやつ
 	<br>
@@ -102,6 +91,7 @@
 		<td><a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a></td>
 		<td>
 			@if($likes->where('user_id',Auth::user()->id)->where('tweet_id',$tweet->id)->first())
+			<p>うんこif</p>
 			<p class="favorite-marke">
 				<a class="js-like-toggle loved" href="" data-tweetid="{{$tweet->id}}">
 					<i class="fas fa-heart"></i>
@@ -110,6 +100,7 @@
 			</p>
 
 			@else
+			<p>うんこelse</p>
 			<p class="favorite-marke">
 				<a class="js-like-toggle" href="" data-tweetid="{{ $tweet->id }}">
 					<i class="active far fa-heart"></i>
