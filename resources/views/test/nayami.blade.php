@@ -22,14 +22,6 @@
 <h2>投稿された悩み一覧(クリックで詳細とぶ)</h2>
 <br>
 <body>
-
-@auth
-  <p><a href="/test/add" >悩みを投稿しよう</a></p>
-@endauth
-
-@guest
-  <p><a href="/test/add" >ログインして悩みを投稿しよう</a></p>
-@endguest
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
@@ -41,12 +33,10 @@
       @foreach($questions as $question)
         <tr>
         <td><a href="{{ action('QuestionController@detail', $question->id) }}">{{$question->title}}</a></td>
-        <td>{{$question->user_id}}</td>
         <td><input type="submit" name="id" value="{{$users->find($question->id)->user->name}}"></td>
         <td>
         @auth
             @if($likes->where('user_id',Auth::user()->id)->where('question_id',$question->id)->first())
-            <p>うんこif</p>
             <p class="favorite-marke">
               <a class="js-like-toggle loved" href="" data-questionid="{{$question->id}}">
                 <i class="fas fa-heart"></i>
@@ -55,7 +45,6 @@
             </p>
 
             @else
-            <p>うんこelse</p>
             <p class="favorite-marke">
               <a class="js-like-toggle" href="" data-questionid="{{ $question->id }}">
                 <i class="active far fa-heart"></i>

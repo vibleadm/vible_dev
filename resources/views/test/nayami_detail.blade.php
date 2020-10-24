@@ -18,10 +18,11 @@
 <body>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-<h1>{{$question->main}}</h1>
+
 
 
 <h3>悩める子羊にアドバイス (要ログイン)</h3>
+<p>{{$question->content}}</p>
 <form method="post">
 @csrf
     <textarea rows="10" cols="80" name="content" class="form-control" required placeholder="アドバイスを入力してください"></textarea>

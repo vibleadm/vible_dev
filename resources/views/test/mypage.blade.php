@@ -11,13 +11,13 @@
 </head>
 
 
+@section('content')
+
 @if(isset($access)) 
-<h1>{{$access}}さんのマイページうんこ</h1>
+<h1>{{$access}}さんのマイページ</h1>
 @else
 <h1>{{$myname}}さんのマイページ</h1>
 @endif
-
-@section('content')
 
 <body class="bg-light">
 	@if($myname == $access)
@@ -50,7 +50,7 @@
 		</div>
 		<div class="timeline-Tweet-author">
 			<div class="TweetAuthor"><a class="TweetAuthor-link" href="#channel"> </a><span class="TweetAuthor-avatar"> 
-				<div class="Avatar"> </div></span><span class="TweetAuthor-name">TwitterDev </span><span class="Icon Icon--verified"> </span></div>
+				<div class="Avatar"> </div></span><span class="TweetAuthor-name">{{$myname}}</span><span class="Icon Icon--verified"> </span></div>
 		</div>
 		<div class="timeline-Tweet-text">
 		<a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a>
