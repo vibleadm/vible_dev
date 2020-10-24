@@ -50,7 +50,7 @@
 		</div>
 		<div class="timeline-Tweet-author">
 			<div class="TweetAuthor"><a class="TweetAuthor-link" href="#channel"> </a><span class="TweetAuthor-avatar"> 
-				<div class="Avatar"> </div></span><span class="TweetAuthor-name">TwitterDev </span><span class="Icon Icon--verified"> </span><span class="TweetAuthor-screenName">@TwitterDev </span></div>
+				<div class="Avatar"> </div></span><span class="TweetAuthor-name">TwitterDev </span><span class="Icon Icon--verified"> </span></div>
 		</div>
 		<div class="timeline-Tweet-text">
 		<a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a>
