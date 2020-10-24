@@ -78,6 +78,7 @@
 						<span class="TweetAuthor-avatar">
 							<div><i class="far fa-user"></i></div>
 						</span>
+
 						<span class="TweetAuthor-name">{{$myname}}</span>
 						<span class="Icon Icon--verified"></span>
 					</div>
@@ -107,6 +108,7 @@
 		</div>
 	</div>
 	@endforeach
+
 	<!--テーブル表示してたときのやつ
     <br>
     <h2>ツイート一覧(クリックで詳細とぶ)</h2>
