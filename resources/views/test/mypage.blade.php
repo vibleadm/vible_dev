@@ -19,41 +19,64 @@
 
 @section('content')
 
-<ul class="nav nav-tabs">
-<li class="nav-item">
-	<a class="nav-link active" href="/test/mypage">twitter</a>
-</li>
-<li class="nav-item">
-	<a class="nav-link" href="/test/mypage/vible">vible</a>
-</li>
-</ul>
+
+@foreach($tweets as $tweet)
+<div class="tw-block-parent">
+  <div class="timeline-TweetList-tweet">
+    <div class="timeline-Tweet">
+      <div class="timeline-Tweet-brand">
+        <div class="Icon Icon--twitter"></div>
+      </div>
+      <div class="timeline-Tweet-author">
+        <div class="TweetAuthor"><a class="TweetAuthor-link" href="#channel"> </a><span class="TweetAuthor-avatar"> 
+            <div class="Avatar"> </div></span><span class="TweetAuthor-name">TwitterDev </span><span class="Icon Icon--verified"> </span><span class="TweetAuthor-screenName">@TwitterDev </span></div>
+      </div>
+      <div class="timeline-Tweet-text">
+	  <a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a>
+	  </div>
+      <div class="timeline-Tweet-metadata"><span class="timeline-Tweet-timestamp">9h</span></div>
+      <ul class="timeline-Tweet-actions">
+
+        <li class="timeline-Tweet-action">
+			<a class="Icon Icon--heart" href="#"></a>
+		</li>
+        <li class="timeline-Tweet-action">
+			<a class="Icon Icon--share" href="#"></a>
+		</li>
+		
+      </ul>
+    </div>
+  </div>
+</div>
+@endforeach
+
+
+
+
+
 
 <div class="tab-content">
 <div class="tab-pane active">
 	<body class="bg-light">
-	
-	@if($myname == $access)
-		<form action="/test/mypage/tweet" method="post">
-			@csrf
-			<div class="container-fluid">
-				<div class="col-xl-5 mb-2 mb-xl-0">
-					<div class="mb-1 small text-danger"><span class="badge badge-danger ml-2"></span></div>
-					<div><input type="text" name="content" class="form-control" required placeholder="つぶやいてください"></div>
-					
+		@if($myname == $access)
+			<form action="/test/mypage/tweet" method="post">
+				@csrf
+				<div class="container-fluid">
+					<div class="col-xl-5 mb-2 mb-xl-0">
+						<div class="mb-1 small text-danger"><span class="badge badge-danger ml-2"></span></div>
+						<div><input type="text" name="content" class="form-control" required placeholder="つぶやいてください"></div>
+						
+					</div>
+				<div class="col-xl row">
+					<div class="col-sm-auto col-lg col-xl align-self-center">
+						<input type="submit" value="ツイート" class="btn btn-info mb-1">
+						<input type="reset" value="クリア" class="btn btn-warning mb-1">
+					</div>
 				</div>
-			<div class="col-xl row">
-				<div class="col-sm-auto col-lg col-xl align-self-center">
-					<input type="submit" value="ツイート" class="btn btn-info mb-1">
-					<input type="reset" value="クリア" class="btn btn-warning mb-1">
-				</div>
-			</div>
-		</form>
-	@else
-		<p>私は40歳以上、70歳未満です</p>
-	@endif
-	
-
-
+			</form>
+		@else
+			<p>私は40歳以上、70歳未満です</p>
+		@endif
 	</body>
 
 	<br>
@@ -68,7 +91,6 @@
 		<td><a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a></td>
 		<td>
 			@if($likes->where('user_id',Auth::user()->id)->where('tweet_id',$tweet->id)->first())
-			<p>うんこif</p>
 			<p class="favorite-marke">
 				<a class="js-like-toggle loved" href="" data-tweetid="{{$tweet->id}}">
 					<i class="fas fa-heart"></i>
@@ -77,7 +99,6 @@
 			</p>
 
 			@else
-			<p>うんこelse</p>
 			<p class="favorite-marke">
 				<a class="js-like-toggle" href="" data-tweetid="{{ $tweet->id }}">
 					<i class="active far fa-heart"></i>
