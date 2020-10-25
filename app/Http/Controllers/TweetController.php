@@ -91,7 +91,8 @@ class TweetController extends Controller
             'content' => $request->content
         ];
         DB::insert('insert into answer_tweets (tweet_id,user_id,content) values (:tweet_id,:user_id,:content)', $param);
-        return redirect('/test');
+        //return redirect('/test');
+        return back();
     }
 
 

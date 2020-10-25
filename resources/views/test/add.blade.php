@@ -13,11 +13,14 @@
             </tr>
             <tr>
                 <th>main: </th>
-                <td><input type="textarea" name="main"></td>
+                <td>
+                <textarea rows="10" cols="80" name="main" class="form-control" ></textarea>
+                </td>
             </tr>
             <tr>
-                <th></th>
+                <th>
                 <td><input type="submit" value="send"></td>
+                </th>
             </tr>
         </table>
     </form>
