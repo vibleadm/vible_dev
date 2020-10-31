@@ -83,18 +83,18 @@
                         <p class="modal-title" id="modal-label">ツイートへ返信</p>
                     </div>
                     <!-- 5.モーダルのボディ -->
+                    <form method="post">
+                    @csrf
                     <div class="modal-body">
-                        <form method="post">
-                            @csrf
-                            <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
-                            <div><input type="text" name="content" class="form-control" required placeholder="コメント入力"></div>
-                        </form>
+                        <input type="hidden" name="tweet_id" value="{{$tweet->id}}">
+                        <div><input type="text" name="content" class="form-control" required placeholder="コメント入力"></div>  
                     </div>
                     <!-- 6.モーダルのフッタ -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
                         <button type="submit" class="btn btn-primary">送信</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
