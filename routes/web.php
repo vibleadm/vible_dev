@@ -26,18 +26,13 @@ use Illuminate\Auth\Middleware\Authenticate;
 //})->name('toppage');
 Route::get('/', 'QuestionController@index')->name('toppage');
 
+Route::delete('test/destroy/{id}', 'QuestionController@nayami_destroy')->name('destroy');
+Route::delete('test/mypage/destroy/{id}', 'TweetController@tweet_destroy')->name('tweet.destroy');
 
-
-//↓ajax用おためし
-Route::post('/sample2', 'PostsController@sample2');
-//↑ここまで
 
 Route::get('test', 'QuestionController@index')->name('toppage');
 Route::post('/questionlike', 'QuestionController@ajaxlike');
 
-
-//こいつがあると名前からmypage飛ぶのが妨害される。。
-//Route::post('test/{id}', 'PostsController@index');
 
 
 
@@ -62,40 +57,19 @@ Route::post('test/add', 'QuestionController@nayami_create')->middleware('auth');
 
 
 
-
-
-
-/*
-Route::get('hello/session', 'UsersController@ses_get');
-Route::post('hello/session', 'UsersController@ses_put');
-*/
 Route::get('/logout', 'Auth\LoginController@logout');
 
 //ホーム画面のLogin,Registerの表示をしてくれる
 Route::auth();
 
 
-
-/*
-Route::post('/posts/{post}/likes', 'LikesController@store');
-Route::post('/posts/{post}/likes/{like}', 'LikesController@destroy');
-
-Route::post('/tweets/{tweet}/likes', 'TweetLikesController@store');
-Route::post('/tweets/{tweet}/likes/{like}', 'TweetLikesController@destroy');
-*/
-
 Route::get('/nayami/{id}', 'QuestionController@detail')->middleware('auth');
-//Route::post('/posts/{id}', 'PostsController@show2');
 Route::post('/nayami/{id}', 'QuestionController@nayami_answer');
 Route::post('answerquestionlike', 'QuestionController@answer_question_like');
 
 
 
 
-/*
-Route::get('/', 'PostsController@index')->name('posts.index');
 
-//ログイン中のユーザーのみアクセス可能
-//「ajaxlike.jsファイルのurl:'ルーティング'」に書くものと合わせる。
-Route::post('/ajaxlike', 'PostsController@ajaxlike');
-*/
+?>
+

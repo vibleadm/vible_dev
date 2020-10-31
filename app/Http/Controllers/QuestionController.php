@@ -134,6 +134,17 @@ class QuestionController extends Controller
         
     }
 
+    public function nayami_destroy($id)
+    {
+    #削除処理
+    $greeting = Question::findOrFail($id);
+    $greeting->delete();
+    
+    #greetingsテーブルのレコードを全件取得
+    $data = Question::all();
+    return redirect('/test');
+    }
+
 
     
 }

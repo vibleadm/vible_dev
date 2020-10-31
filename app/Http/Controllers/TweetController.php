@@ -103,6 +103,7 @@ class TweetController extends Controller
 
 
 
+
     public function tweetlike(Request $request)
     {
         //var_dump('うんこ');
@@ -170,6 +171,17 @@ class TweetController extends Controller
             'likes' => $likes,
             'access' => $request->id,
         ]);
+    }
+
+    public function tweet_destroy($id)
+    {
+    #削除処理
+    $greeting = Tweet::findOrFail($id);
+    $greeting->delete();
+    
+    #greetingsテーブルのレコードを全件取得
+    $data = Tweet::all();
+    return back();
     }
 }
 
