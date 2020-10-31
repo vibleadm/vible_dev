@@ -44,6 +44,7 @@ class TweetController extends Controller
         $tweets = Tweet::withCount('tweet_likes')->where('id',$id)->first();
 
         $users = AnswerTweet::with('user:id,name')->get();
+        $tw_users = Tweet::with('user:id,name')->get();
 
         return view('test.tw_detail')->with([
             "tweet" => $tweet,
@@ -51,6 +52,7 @@ class TweetController extends Controller
             "answer_tweets" => $answer_tweets,
             "likes" => $likes,
             "users" => $users,
+            "tw_users" => $tw_users,
         ]);
     }
 

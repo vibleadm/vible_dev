@@ -86,10 +86,11 @@ class QuestionController extends Controller
 
         //名前表示用
         $users = AnswerQuestion::with('user:id,name')->where('question_id', $id)->get();
+        $nayami_users = Question::with('user:id,name')->where('question_id', $id)->get();
 
         $question = Question::findorFail($id);
         $likes = AnswerQuestionLike::all();
-        return view('test.nayami_detail')->with(array('answer_questions' => $answer_questions, 'answers' => $answers, 'question' => $question, 'likes' => $likes, 'users' => $users));
+        return view('test.nayami_detail')->with(array('answer_questions' => $answer_questions, 'answers' => $answers, 'question' => $question, 'likes' => $likes,'nayami_users' => $nayami_users, 'users' => $users));
     }
 
     public function nayami_answer(Request $request)
