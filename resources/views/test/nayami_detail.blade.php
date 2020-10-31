@@ -50,7 +50,7 @@
                             <div><i class="far fa-user"></i></div>
                         </span>
 
-                        <span class="TweetAuthor-name">{{$nayami_users}}</span>
+                        <span class="TweetAuthor-name">{{$nayami_users->find($question->id)->user->name}}</span>
                         <span class="Icon Icon--verified"></span>
                     </div>
                 </div>
