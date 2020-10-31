@@ -9,35 +9,16 @@
 
 
 <header>
-  <nav class="navbar navbar-expand-lg navbar-light pl-5 pr-5 pt-2 pb-2">
+  <nav class="navbar navbar-expand-xl navbar-dark mt-3 mb-3">
     <a class="navbar-brand text-white" href="/test"><img class="logo" src="{{ asset('image/logo_transparent.png') }}" alt="logo" style="height: 50px;"></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber" aria-expanded="false" aria-label="ナビゲーションの切替">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="Navber">
-
-
-
-      <ul class="navbar-nav ml-auto mr-5">
+      <ul class="navbar-nav mr-auto">
         <li class="nav-item ml-2">
           <a class="nav-link text-white" id="post-link" href="/test/add">悩みを投稿する</a>
-        </li>
-        <li class="nav-item dropdown">
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">マイページ</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">下書き一覧</a>
-            <a class="dropdown-item" href="#">編集リクエスト一覧</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">設定</a>
-            <a class="dropdown-item" href="#">ヘルプ</a>
-            <div class="dropdown-divider"></div>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-              @csrf
-            </form>
-          </div>
         </li>
         @auth
         <li class="nav-item ml-2">
@@ -59,15 +40,15 @@
     </div><!-- /.navbar-collapse -->
   </nav>
 
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 </header>
 
-
-
 <body>
-
   @yield('content')
-
 </body>
-
 
 </html>
