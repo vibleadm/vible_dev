@@ -21,9 +21,10 @@ use Illuminate\Auth\Middleware\Authenticate;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+//Route::get('/', function () {
+//    return view('welcome');
+//})->name('toppage');
+Route::get('/', 'QuestionController@index')->name('toppage');
 
 Route::delete('test/destroy/{id}', 'QuestionController@nayami_destroy')->name('destroy');
 Route::delete('test/mypage/destroy/{id}', 'TweetController@tweet_destroy')->name('tweet.destroy');
@@ -69,4 +70,6 @@ Route::post('answerquestionlike', 'QuestionController@answer_question_like');
 
 
 
+
 ?>
+
