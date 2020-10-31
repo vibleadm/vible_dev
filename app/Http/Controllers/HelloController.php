@@ -12,14 +12,14 @@ class HelloController extends Controller
 {
     public function nayami(Request $request)
     {
-	$items = DB::select('select * from Question);
-	return view('hello.nayami', ['items' => $items]);
+        $items = DB::select('select * from Question');
+        return view('hello.nayami', ['items' => $items]);
     }
-    
+
     public function post(Request $request)
     {
         $items = DB::select('select * from people');
-        return view('hello.index',['items' => $items]);
+        return view('hello.index', ['items' => $items]);
     }
 
     public function add(Request $request)
@@ -61,8 +61,8 @@ class HelloController extends Controller
     public function show(Request $request)
     {
         $id = $request->id;
-        $item = DB::table('people')->where('id',$id)->first();
-        return view('hello.show',['item'=>$item]);
+        $item = DB::table('people')->where('id', $id)->first();
+        return view('hello.show', ['item' => $item]);
     }
 
     public function ses_get(Request $request)
@@ -77,6 +77,4 @@ class HelloController extends Controller
         $request->session()->put('msg', $msg);
         return redirect('hello/session');
     }
-    
-    
 }

@@ -8,14 +8,6 @@
             color: #999;
         }
 
-        h1 {
-            font-size: 50pt;
-            text-align: right;
-            color: #f6f6f6;
-            margin: -20px 0px -30px 0px;
-            letter-spacing: -4pt;
-        }
-
         th {
             background-color: #999;
             color: fff;
@@ -55,7 +47,12 @@
                     </div>
                 </div>
                 <div class="timeline-Tweet-text">
-                    <a href="{{action('QuestionController@detail',$question->id)}}">{{$question->content}}</a>
+                    <b>
+                        タイトル：{{$question->title}}
+                    </b>
+                    <br><br>
+                    本文：
+                    {{$question->content}}
                 </div>
                 <div class="timeline-Tweet-metadata"><span class="timeline-Tweet-timestamp">{{$question->created_at}}</span></div>
                 <ul class="timeline-Tweet-actions">
@@ -97,6 +94,7 @@
                             @csrf
                             <input type="hidden" name="question_id" value="{{$question->id}}">
                             <div><input type="text" name="content" class="form-control" required placeholder="アドバイス入力"></div>
+                        </form>
                     </div>
                     <!-- 6.モーダルのフッタ -->
                     <div class="modal-footer">
@@ -107,51 +105,54 @@
             </div>
         </div>
 
+        <br>
+        <br>
+        <br>
         <h2>アドバイス一覧</h2>
-        <form action="/test/mypage" method="post">
-            @csrf
-            @foreach($answer_questions as $answer_question)
-            <div class="tw-block-parent">
-                <div class="timeline-TweetList-tweet">
-                    <div class="timeline-Tweet">
-                        <div class="timeline-Tweet-author">
-                            <div class="TweetAuthor">
-                                <a class="TweetAuthor-link" href="#channel"> </a>
-                                <span class="TweetAuthor-avatar">
-                                    <div><i class="far fa-user"></i></div>
-                                </span>
+        @foreach($answer_questions as $answer_question)
+        <div class="tw-block-parent">
+            <div class="timeline-TweetList-tweet">
+                <div class="timeline-Tweet">
+                    <div class="timeline-Tweet-author">
+                        <div class="TweetAuthor">
+                            <a class="TweetAuthor-link" href="#channel"> </a>
+                            <span class="TweetAuthor-avatar">
+                                <div><i class="far fa-user"></i></div>
+                            </span>
+                            <form action="/test/mypage" method="post">
+                                @csrf
                                 <input type="submit" name="id" value="{{$users->find($answer_question->id)->user->name}}">
                                 <span class="Icon Icon--verified"></span>
-                            </div>
+                            </form>
                         </div>
-                        <div class="timeline-Tweet-text">
-                            {{$answer_question->content}}
-                        </div>
-                        <div class="timeline-Tweet-metadata"><span class="timeline-Tweet-timestamp">9h</span></div>
-                        <ul class="timeline-Tweet-actions">
-
-                            @if($likes->where('user_id',Auth::user()->id)->where('answer_question_id',$answer_question->id)->first())
-                            <li class="timeline-Tweet-action">
-                                <a class="js-like-toggle loved" href="" data-answerquestionid="{{$answer_question->id}}">
-                                    <i class="fas fa-heart"></i>
-                                </a>
-                                <span class="likesCount">{{$answer_question->answer_question_likes_count}}</span>
-                            </li>
-                            @else
-                            <li class="timeline-Tweet-action">
-                                <a class="js-like-toggle" href="" data-answerquestionid="{{$answer_question->id }}">
-                                    <i class="active far fa-heart"></i>
-                                </a>
-                                <span class="likesCount">{{$answer_question->answer_question_likes_count}}</span>
-                            </li>
-                            @endif
-
-                        </ul>
                     </div>
+                    <div class="timeline-Tweet-text">
+                        {{$answer_question->content}}
+                    </div>
+                    <div class="timeline-Tweet-metadata"><span class="timeline-Tweet-timestamp">{{$answer_question->created_at}}</span></div>
+                    <ul class="timeline-Tweet-actions">
+
+                        @if($likes->where('user_id',Auth::user()->id)->where('answer_question_id',$answer_question->id)->first())
+                        <li class="timeline-Tweet-action">
+                            <a class="js-like-toggle loved" href="" data-answerquestionid="{{$answer_question->id}}">
+                                <i class="fas fa-heart"></i>
+                            </a>
+                            <span class="likesCount">{{$answer_question->answer_question_likes_count}}</span>
+                        </li>
+                        @else
+                        <li class="timeline-Tweet-action">
+                            <a class="js-like-toggle" href="" data-answerquestionid="{{$answer_question->id }}">
+                                <i class="active far fa-heart"></i>
+                            </a>
+                            <span class="likesCount">{{$answer_question->answer_question_likes_count}}</span>
+                        </li>
+                        @endif
+
+                    </ul>
                 </div>
             </div>
-            @endforeach
-        </form>
+        </div>
+        @endforeach
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
