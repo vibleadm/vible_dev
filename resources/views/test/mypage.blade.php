@@ -68,6 +68,7 @@
 	@endif
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 	@foreach($tweets as $tweet)
 	<div class="tw-block-parent">
 		<div class="timeline-TweetList-tweet">
@@ -79,7 +80,7 @@
 							<div><i class="far fa-user"></i></div>
 						</span>
 
-						<span class="TweetAuthor-name">{{$myname}}</span>
+						<span class="TweetAuthor-name">{{$access}}</span>
 						<span class="Icon Icon--verified"></span>
 					</div>
 				</div>
