@@ -41,7 +41,7 @@
                             <div><i class="far fa-user"></i></div>
                         </span>
 
-                        <span class="TweetAuthor-name">{{$users->find($tweet->id)->user->name}}</span>
+                        <span class="TweetAuthor-name">{{$tw_users->find($tweet->id)->user->name}}</span>
                         <span class="Icon Icon--verified"></span>
                     </div>
                 </div>
