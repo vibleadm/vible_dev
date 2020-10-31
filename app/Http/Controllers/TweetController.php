@@ -41,11 +41,13 @@ class TweetController extends Controller
         //$answer_tweets = DB::table('answer_tweets')->where('tweet_id',$id)->get();
         $answer_tweets = AnswerTweet::withCount('answer_tweet_likes')->orderBy('created_at', 'desc')->where('tweet_id',$id)->paginate(10);
         $likes = AnswerTweetLike::all();
+        $tweets = Tweet::withCount('tweet_likes')->where('id',$id)->first();
 
         $users = AnswerTweet::with('user:id,name')->get();
 
         return view('test.tw_detail')->with([
             "tweet" => $tweet,
+            "tweets" => $tweets,
             "answer_tweets" => $answer_tweets,
             "likes" => $likes,
             "users" => $users,
@@ -184,5 +186,3 @@ class TweetController extends Controller
     return back();
     }
 }
-
-?>

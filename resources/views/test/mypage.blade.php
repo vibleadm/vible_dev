@@ -9,49 +9,92 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-@section('content')
-@if(isset($access))
-<h1>{{$access}}さんのマイページ</h1>
-@else
-<h1>{{$myname}}さんのマイページ</h1>
-@endif
 
-<body class="bg-light">
-	<!-- 1.モーダル表示のためのボタン -->
-	@if($myname == $access)
-	<button class="btn btn-primary" data-toggle="modal" data-target="#modal-example">
-		ツイートする
-	</button>
-	<!-- 2.モーダルの配置 -->
-	<div class="modal" id="modal-example" tabindex="-1">
-		<div class="modal-dialog">
-			<!-- 3.モーダルのコンテンツ -->
-			<div class="modal-content">
-				<!-- 4.モーダルのヘッダ -->
-				<div class="modal-header">
-					<p class="modal-title" id="modal-label">今の気持ちを投稿しよう</p>
+@section('content')
+<div class="outer">
+	<div class="inner1">
+		<br>
+		@if(isset($access))
+		<h1>{{$access}}さんのツイート一覧</h1>
+		@else
+		<h1>{{$myname}}さんのツイート一覧</h1>
+		@endif
+		<br>
+
+		<!-- 1.モーダル表示のためのボタン -->
+		@if($myname == $access)
+		<div class="button1">
+			<button class="btn btn-primary" data-toggle="modal" data-target="#modal-example">
+				ツイートする
+			</button>
+			<!-- 2.モーダルの配置 -->
+			<div class="modal" id="modal-example" tabindex="-1">
+				<div class="modal-dialog">
+					<!-- 3.モーダルのコンテンツ -->
+					<div class="modal-content">
+						<!-- 4.モーダルのヘッダ -->
+						<div class="modal-header">
+							<p class="modal-title" id="modal-label">今の気持ちを投稿しよう</p>
+						</div>
+						<!-- 5.モーダルのボディ -->
+						<form action="/test/mypage/tweet" method="post">
+							<div class="modal-body">
+								@csrf
+								<div><input type="text" name="content" class="form-control" required placeholder="つぶやいてください"></div>
+							</div>
+							<!-- 6.モーダルのフッタ -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+								<button type="submit" class="btn btn-primary">ツイート</button>
+							</div>
+						</form>
+					</div>
 				</div>
-				<!-- 5.モーダルのボディ -->
-				<form action="/test/mypage/tweet" method="post">
-					<div class="modal-body">	
-						@csrf
-						<div><input type="text" name="content" class="form-control" required placeholder="つぶやいてください"></div>
-					</div>
-					<!-- 6.モーダルのフッタ -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-						<button type="submit" class="btn btn-primary">ツイート</button>
-					</div>
-				</form>
 			</div>
 		</div>
+		@endif
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	</div>
-	@endif
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-	@foreach($tweets as $tweet)
+	<div class="inner2">
+		@foreach($tweets as $tweet)
 		<div class="tw-block-parent">
+			@auth
+			@if((int)$tweet->user_id == Auth::user()->id)
+			<div class="button2">
+				<button class="btn btn-primary" data-toggle="modal" data-target="#modal-example{{$tweet->id}}">
+					削除
+				</button>
+				<!-- 2.モーダルの配置 -->
+
+				<div class="modal" id="modal-example{{$tweet->id}}" tabindex="-1">
+					<div class="modal-dialog">
+						<!-- 3.モーダルのコンテンツ -->
+						<div class="modal-content">
+							<!-- 4.モーダルのヘッダ -->
+							<div class="modal-header">
+								<p class="modal-title" id="modal-label">削除しますか？</p>
+							</div>
+
+							<!-- 6.モーダルのフッタ -->
+							<div class="modal-footer">
+								<form method="POST" action="{{route('tweet.destroy',['id' => $tweet->id])}}">
+
+									@csrf
+									@method('delete')
+									<p>{{$tweet->id}}</p>
+									<button class="btn btn-danger" data-id="{{ $tweet->id }}" type="submit">削除する</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			@endif
+			@endauth
+
 			<div class="timeline-TweetList-tweet">
 				<div class="timeline-Tweet">
 					<div class="timeline-Tweet-author">
@@ -68,7 +111,7 @@
 					<div class="timeline-Tweet-text">
 						<a href="{{action('TweetController@detail',$tweet->id)}}">{{$tweet->content}}</a>
 					</div>
-					<div class="timeline-Tweet-metadata"><span class="timeline-Tweet-timestamp">9h</span></div>
+					<div class="timeline-Tweet-metadata"><span class="timeline-Tweet-timestamp">{{$tweet->created_at}}</span></div>
 					<ul class="timeline-Tweet-actions">
 						@if($likes->where('user_id',Auth::user()->id)->where('tweet_id',$tweet->id)->first())
 						<li class="timeline-Tweet-action">
@@ -88,45 +131,14 @@
 					</ul>
 				</div>
 			</div>
-			
-			@auth
-			@if((int)$tweet->user_id == Auth::user()->id)
-			<button class="btn btn-primary" data-toggle="modal" data-target="#modal-example{{$tweet->id}}">
-				削除
-			</button>
-				<!-- 2.モーダルの配置 -->
 
-				<div class="modal" id="modal-example{{$tweet->id}}" tabindex="-1">
-					<div class="modal-dialog">
-						<!-- 3.モーダルのコンテンツ -->
-						<div class="modal-content">
-							<!-- 4.モーダルのヘッダ -->
-							<div class="modal-header">
-								<p class="modal-title" id="modal-label">削除しますか？</p>
-							</div>
-						
-							<!-- 6.モーダルのフッタ -->
-							<div class="modal-footer">
-							<form method="POST" action="{{route('tweet.destroy',['id' => $tweet->id])}}">
-								
-								@csrf
-								@method('delete')
-								<p>{{$tweet->id}}</p>
-								<button class="btn btn-danger" data-id="{{ $tweet->id }}" type="submit">削除する</button>
-								<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-							</form>
-							</div>	
-						</div>	
-					</div>
-				</div>
-				</div>
-			@endif
-			@endauth	
 		</div>
-	@endforeach
+		<br>
+		@endforeach
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="{{ mix('js/_tweetlike.js') }}"></script>
-</body>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="{{ mix('js/_tweetlike.js') }}"></script>
+	</div>
+</div>
 @endsection

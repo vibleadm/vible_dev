@@ -5,6 +5,37 @@
   <!-- cssをインポート -->
   <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
   <link rel=”stylesheet” href=”https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css”> <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
+  <style>
+    .outer {
+      position: relative;
+    }
+
+    .button1 {
+      margin-left: 70%;
+    }
+
+    .button2 {}
+
+    .inner1 {
+      position: relative;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      width: 50%;
+    }
+
+    .inner2 {
+      position: relative;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin-left: 30%;
+      width: 50%;
+    }
+  </style>
 </head>
 
 
