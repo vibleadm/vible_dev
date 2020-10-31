@@ -73,7 +73,7 @@ class TweetController extends Controller
         $myname = $users->name;
         $tweets = Tweet::withCount('tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$id)->paginate(100);
         $likes = TweetLike::all();
-        return view('test.mypage')->with([
+        return redirect('test/mypage')->with([
             "users"=>$users,
             "tweets" => $tweets,
             'myname' => $myname,

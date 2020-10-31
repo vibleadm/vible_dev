@@ -80,13 +80,11 @@
 							<!-- 6.モーダルのフッタ -->
 							<div class="modal-footer">
 								<form method="POST" action="{{route('tweet.destroy',['id' => $tweet->id])}}">
-
 									@csrf
 									@method('delete')
-									<p>{{$tweet->id}}</p>
 									<button class="btn btn-danger" data-id="{{ $tweet->id }}" type="submit">削除する</button>
-									<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
 								</form>
+								<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
 							</div>
 						</div>
 					</div>
