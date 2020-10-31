@@ -86,7 +86,7 @@ class QuestionController extends Controller
 
         //名前表示用
         $users = AnswerQuestion::with('user:id,name')->where('question_id', $id)->get();
-        $nayami_users = Question::with('user:id,name')->where('question_id', $id)->get();
+        $nayami_users = Question::with('user:id,name')->get();
 
         $question = Question::findorFail($id);
         $likes = AnswerQuestionLike::all();
