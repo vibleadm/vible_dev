@@ -21,9 +21,10 @@ use Illuminate\Auth\Middleware\Authenticate;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+//Route::get('/', function () {
+//    return view('welcome');
+//})->name('toppage');
+Route::get('/', 'QuestionController@index')->name('toppage');
 
 
 
@@ -98,7 +99,3 @@ Route::get('/', 'PostsController@index')->name('posts.index');
 //「ajaxlike.jsファイルのurl:'ルーティング'」に書くものと合わせる。
 Route::post('/ajaxlike', 'PostsController@ajaxlike');
 */
-
-
-
-?>
