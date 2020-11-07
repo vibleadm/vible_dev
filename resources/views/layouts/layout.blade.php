@@ -48,6 +48,7 @@
 
     gtag('config', 'G-8QRPRE4PPS');
   </script>
+  <script data-ad-client="ca-pub-6224979193111346" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 
 
