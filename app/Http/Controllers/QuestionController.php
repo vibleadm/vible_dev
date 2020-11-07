@@ -16,33 +16,26 @@ class QuestionController extends Controller
     public function index()
     {
         $data = [];
-        //$questions = Question::all();
         $likes = QuestionLike::all();
         //いいね数まで含めた変数　question_likes_count
         $questions = Question::withCount('question_likes')->orderBy('created_at', 'desc')->paginate(10);
 
-        //こいつがやりたいことだった。。。
+        //ユーザ名前を引っ張ってくる
         $users = Question::with('user:id,name')->get();
-
         $data = [
             'questions' => $questions,
             'likes' => $likes,
             'users' => $users,
         ];
 
-
         return view('test.nayami', $data);
     }
 
 
-
     public function ajaxlike(Request $request)
     {
-        //var_dump('うんこ');
         $id = Auth::user()->id;
         $question_id = $request->question_id;
-        //var_dump($question_id);
-
         $like = QuestionLike::where('question_id', $question_id)->where('user_id', $id)->first();
         $question = Question::findOrFail($question_id);
 
@@ -66,13 +59,11 @@ class QuestionController extends Controller
     public function nayami_create(Request $request)
     {
         $id = Auth::id();
-        //$items = DB::table('users')->where('id',$id)->first();
         $param = [
             'title' => $request->title,
             'user_id' => $id,
             'content' => $request->main,
-            //いいね数初期化設定する
-            //'likes_count' => 0,
+
         ];
         DB::table('questions')->insert($param);
         return redirect('/test');
@@ -97,8 +88,6 @@ class QuestionController extends Controller
     {
         $id = Auth::id();
         $items = DB::table('users')->where('id', $id)->first();
-        var_dump($request->question_id);
-        var_dump($request->content);
 
         $param = [
             'question_id' => $request->question_id,
@@ -106,20 +95,14 @@ class QuestionController extends Controller
             'content' => $request->content
         ];
         DB::insert('insert into answer_questions (question_id, user_id, content) values (:question_id,:user_id,:content)', $param);
-        //return redirect('/test');
+
         return back();
     }
 
     public function answer_question_like(Request $request)
     {
-        //var_dump('うんこ');
-        //var_dump($request->answer_question_id);
-
-
         $id = Auth::user()->id;
         $answer_question_id = $request->answer_question_id;
-        //var_dump($question_id);
-
         $like = AnswerQuestionLike::where('answer_question_id', $answer_question_id)->where('user_id', $id)->first();
         $answer_question = AnswerQuestion::findOrFail($answer_question_id);
 
@@ -140,9 +123,8 @@ class QuestionController extends Controller
         #削除処理
         $greeting = Question::findOrFail($id);
         $greeting->delete();
-
-        #greetingsテーブルのレコードを全件取得
         $data = Question::all();
+
         return redirect('/test');
     }
 }

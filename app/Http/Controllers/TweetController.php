@@ -16,14 +16,9 @@ class TweetController extends Controller
     {
         $id = Auth::id();
         $users = DB::table('users')->where('id',$id)->first();
-
         $myname = $users->name;
-        //$posts = DB::table('tweets')->where('userID',$user)->get();
-        //$tweets = Tweet::where('user_id',$id)->get();
         $likes = TweetLike::all();
         $tweets = Tweet::withCount('tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$id)->paginate(100);
-
-
 
         return view('test.mypage')->with([
             "users"=>$users,
@@ -38,11 +33,9 @@ class TweetController extends Controller
 
     public function detail($id) {
         $tweet = DB::table('tweets')->where('id',$id)->first();
-        //$answer_tweets = DB::table('answer_tweets')->where('tweet_id',$id)->get();
         $answer_tweets = AnswerTweet::withCount('answer_tweet_likes')->orderBy('created_at', 'desc')->where('tweet_id',$id)->paginate(10);
         $likes = AnswerTweetLike::all();
         $tweets = Tweet::withCount('tweet_likes')->where('id',$id)->first();
-
         $users = AnswerTweet::with('user:id,name')->get();
         $tw_users = Tweet::with('user:id,name')->get();
 
@@ -59,17 +52,13 @@ class TweetController extends Controller
     public function tweet_add(Request $request)
     {
         $id = Auth::id();
-        $users = DB::table('users')->where('id',$id)->first();
-        
+        $users = DB::table('users')->where('id',$id)->first();   
         $param = [
             'user_id' => $id,
             'content' => $request->content,
         ];
-        //DB::insert('insert into tweet (userID,main) values (:userID,:main)', $param);
-        DB::table('tweets') ->insert($param);
-        //return back();
-        //return redirect()->route('gotomypage', ['access' => $users->name]);
         
+        DB::table('tweets') ->insert($param);  
         $myname = $users->name;
         $tweets = Tweet::withCount('tweet_likes')->orderBy('created_at', 'desc')->where('user_id',$id)->paginate(100);
         $likes = TweetLike::all();
@@ -95,27 +84,14 @@ class TweetController extends Controller
             'content' => $request->content
         ];
         DB::insert('insert into answer_tweets (tweet_id,user_id,content) values (:tweet_id,:user_id,:content)', $param);
-        //return redirect('/test');
         return back();
     }
 
 
-
-
-
-
-
-
-
-
     public function tweetlike(Request $request)
     {
-        //var_dump('うんこ');
-
-        
         $id = Auth::user()->id;
-        $tweet_id = $request->tweet_id;
-        
+        $tweet_id = $request->tweet_id;       
         $like = TweetLike::where('tweet_id', $tweet_id)->where('user_id', $id)->first();
         $tweet = Tweet::findOrFail($tweet_id);
 
@@ -135,14 +111,8 @@ class TweetController extends Controller
 
     public function answer_tweet_like(Request $request)
     {
-        //var_dump('うんこ');
-        //var_dump($request->answer_question_id);
-
-        
         $id = Auth::user()->id;
-        $answer_tweet_id = $request->answer_tweet_id;
-        //var_dump($question_id);
-        
+        $answer_tweet_id = $request->answer_tweet_id;        
         $like = AnswerTweetLike::where('answer_tweet_id', $answer_tweet_id)->where('user_id', $id)->first();
         $answer_tweet = AnswerTweet::findOrFail($answer_tweet_id);
 
@@ -182,9 +152,8 @@ class TweetController extends Controller
     #削除処理
     $greeting = Tweet::findOrFail($id);
     $greeting->delete();
-    
-    #greetingsテーブルのレコードを全件取得
     $data = Tweet::all();
+    
     return back();
     }
 }
