@@ -38,8 +38,6 @@ $(function () {
             })
             // Ajaxリクエストが失敗した場合
             .fail(function (data, xhr, err) {
-                //ここの処理はエラーが出た時にエラー内容をわかるようにしておく。
-                //とりあえず下記のように記述しておけばエラー内容が詳しくわかります。笑
                 console.log('エラー');
                 console.log(err);
                 console.log(xhr);
