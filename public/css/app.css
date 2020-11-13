@@ -10905,14 +10905,30 @@ a.text-dark:focus {
 }
 
 html {
+  padding: 0;
+  /*　追加*/
+  margin: 0;
+  /*　追加*/
+  height: 100%;
   font-family: sans-serif;
   line-height: 1.15;
 }
 
-body {
-  font-size: 16px;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Hiragino Kaku Gothic ProN,"\30E1\30A4\30EA\30AA",meiryo,sans-serif;
-  font-weight: 400;
+body,
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  margin-top: auto;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #555555;
+  color: #cccccc;
+  text-align: center;
 }
 
 nav {
