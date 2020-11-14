@@ -1,6 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
-
-/*!
+@import url(https://fonts.googleapis.com/css?family=Nunito);/*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
  * Copyright 2011-2020 Twitter, Inc.
@@ -10906,9 +10904,7 @@ a.text-dark:focus {
 
 html {
   padding: 0;
-  /*　追加*/
   margin: 0;
-  /*　追加*/
   height: 100%;
   font-family: sans-serif;
   line-height: 1.15;
